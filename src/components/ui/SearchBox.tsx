@@ -21,16 +21,17 @@ const SearchBox = () => {
   // ✅ Sync query from URL (but don't show suggestions)
   useEffect(() => {
 
-    const urlQuery = searchParams.get("query") || "";
+  const urlQuery = searchParams.get("query");
 
-    setQuery(urlQuery);
+  if (!urlQuery) return;
 
-    setSuggestions([]);
+  setQuery(urlQuery);
 
-    setIsTyping(false); // ✅ important
+  setSuggestions([]);
 
-  }, [searchParams]);
+  setIsTyping(false);
 
+}, [searchParams]);
 
   // ✅ Fetch products
   useEffect(() => {
