@@ -4,7 +4,7 @@ import "./globals.css";
 import Nav from "@/components/layout/Nav";
 import Footer from "@/components/layout/Footer";
 import StoreProvider from "@/StoreProvider/StoreProvider";
-
+import { Suspense } from "react";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -31,7 +31,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <Suspense fallback={<div>Updating your search...</div>}>
         <Nav/>
+        </Suspense>
+
         {children}
         <Footer/>
         
