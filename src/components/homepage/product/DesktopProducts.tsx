@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Product } from "../../../../typing";
+import { Product } from "../../../utilities/typing";
 import { getProductsByCategory } from "../../../../Request/requests";
 import ProductCard from "./ProductCard";
 import { motion } from "framer-motion";
@@ -42,6 +42,13 @@ const DesktopProducts = ({ categorySlug }: Props) => {
     fetchProducts();
   }, [categorySlug, skip]);
 
+  const handleNext = () => {
+    setSkip((prev) => prev + LIMIT)
+  }
+  const handlePrev = () => {
+    setSkip((prev) => prev - LIMIT)
+  }
+
   // Scroll to top (Myntra-like)
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -81,7 +88,7 @@ const DesktopProducts = ({ categorySlug }: Props) => {
       <div className="flex justify-center gap-4 mt-8">
         <button
           disabled={skip === 0}
-          onClick={() => setSkip((prev) => prev - LIMIT)}
+          onClick={handlePrev}
           className="px-5 py-2 border rounded-md disabled:opacity-40"
         >
           Previous
@@ -89,7 +96,7 @@ const DesktopProducts = ({ categorySlug }: Props) => {
 
         <button
           disabled={isLastPage}
-          onClick={() => setSkip((prev) => prev + LIMIT)}
+          onClick={handleNext}
           className="px-5 py-2 border rounded-md disabled:opacity-40"
         >
           Next

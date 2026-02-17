@@ -1,6 +1,6 @@
 "use client"
 import React from "react";
-import { Product } from "../../../typing";
+import { Product } from "../../utilities/typing";
 import { AddDispatch } from "../../../store/store";
 import { useDispatch, UseDispatch } from "react-redux";
 import { addItem } from "../../../store/cartSlice";

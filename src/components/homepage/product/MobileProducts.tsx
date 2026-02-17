@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Product } from "../../../../typing";
+import { Product } from "../../../utilities/typing";
 import { getProductsByCategory } from "../../../../Request/requests";
 import ProductCard from "./ProductCard";
 import { motion } from "framer-motion";

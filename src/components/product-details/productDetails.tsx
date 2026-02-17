@@ -3,7 +3,7 @@
 import Image from "next/image";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Product } from "../../../typing";
+import { Product } from "../../utilities/typing";
 import { addItem } from "../../../store/cartSlice";
 import { useDispatch } from "react-redux";
 import { AddDispatch } from "../../../store/store";

@@ -2,66 +2,22 @@
 
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
-import { getAllProduct } from "../../../Request/requests";
-import { Product } from "../../../typing";
+import { Product } from "../../utilities/typing";
 import { SearchIcon } from "lucide-react";
+import { searchProduct } from "../../../Request/requests";
+
 const SearchBox = () => {
 
   const [query, setQuery] = useState("");
-  const [products, setProducts] = useState<Product[]>([]);
   const [suggestions, setSuggestions] = useState<Product[]>([]);
-  const [isTyping, setIsTyping] = useState(false); // ✅ important
+  const [isTyping, setIsTyping] = useState(false);
 
-  const pathname = usePathname();
   const router = useRouter();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
 
 
-  useEffect(() => {
-    if (pathname === "/" || pathname === "/cart") {
-      setQuery("");
-    }
-  }, [pathname]);
-  // Sync query from URL (but don't show suggestions)
-  useEffect(() => {
-
-  const urlQuery = searchParams.get("query");
-
-  if (!urlQuery) return;
-
-  setQuery(urlQuery);
-
-  setSuggestions([]);
-
-  setIsTyping(false);
-
-}, [searchParams]);
-
-  //  Fetch products
-  useEffect(() => {
-
-    const fetchProducts = async () => {
-
-      try {
-
-        const res = await getAllProduct();
-
-        setProducts(res);
-
-      } catch (error) {
-
-        console.error(error);
-
-      }
-
-    };
-
-    fetchProducts();
-
-  }, []);
-
-
-  //  Filter suggestions ONLY when typing
+  // Debounce using useEffect
   useEffect(() => {
 
     if (!isTyping) return;
@@ -74,18 +30,60 @@ const SearchBox = () => {
 
     }
 
-    const filtered = products
-      .filter(item =>
-        item.title.toLowerCase().includes(query.toLowerCase())
-      )
-      .slice(0, 6);
+    const timer = setTimeout(async () => {
 
-    setSuggestions(filtered);
+      try {
 
-  }, [query, products, isTyping]);
+        const res = await searchProduct(query);
+
+        setSuggestions(res.slice(0, 6));
+
+      } catch (error) {
+
+        console.error(error);
+
+      }
+
+    }, 500); // debounce delay
 
 
-  //  Handle typing
+    // cleanup function
+    return () => { clearTimeout(timer) };
+
+  }, [query]);
+
+
+  // clear when route changes
+  useEffect(() => {
+
+    if (pathname === "/" || pathname === "/cart") {
+
+      setQuery("");
+
+      setSuggestions([]);
+
+    }
+
+  }, [pathname]);
+
+
+  // sync query from URL
+  useEffect(() => {
+
+    const urlQuery = searchParams.get("query");
+
+    if (!urlQuery) return;
+
+    setQuery(urlQuery);
+
+    setSuggestions([]);
+
+    setIsTyping(false);
+
+  }, [searchParams]);
+
+
+  // typing
   const handleChange = (value: string) => {
 
     setQuery(value);
@@ -95,7 +93,7 @@ const SearchBox = () => {
   };
 
 
-  // ✅ Search redirect
+  // redirect
   const goToSearch = (value: string) => {
 
     const trimmed = value.trim();
@@ -113,7 +111,7 @@ const SearchBox = () => {
   };
 
 
-  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent) => {
 
     e.preventDefault();
 
@@ -129,11 +127,11 @@ const SearchBox = () => {
       <div className="w-full max-w-2xl">
 
         <form
-          onSubmit={handleSearch}
-          className="flex items-center rounded-full border border-gray-300 bg-white focus-within:ring-2 focus-within:ring-blue-500 transition duration-300"
+          onSubmit={handleSubmit}
+          className="flex items-center rounded-full border border-gray-300 bg-white"
         >
 
-          <SearchIcon size={30} color="gray" className="px-1"/>
+          <SearchIcon size={30} color="gray" className="px-1" />
 
           <input
             type="text"
@@ -148,21 +146,21 @@ const SearchBox = () => {
 
         {suggestions.length > 0 && (
 
-          <div className="absolute z-50 mt-2 w-full rounded-2xl bg-white backdrop-blur-md shadow-2xl border">
+          <div className="absolute z-50 mt-2 w-full rounded-xl bg-white shadow border">
 
-            {suggestions.map(item => (
+            {suggestions.map((i) => {
+              return (
+                <div
+                  key={i.id}
+                  onClick={() => goToSearch(i.title)}
+                  className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                >
 
-              <div
-                key={item.id}
-                onClick={() => goToSearch(item.title)}
-                className="px-4 py-3 cursor-pointer hover:bg-blue-50"
-              >
+                  {i.title}
 
-                {item.title}
-
-              </div>
-
-            ))}
+                </div>
+              )
+            })}
 
           </div>
 

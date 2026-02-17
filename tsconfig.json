@@ -33,7 +33,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "typing.ts",
+    "src/utilities/typing.ts",
     ".next/dev/types/**/*.ts"
   ],
   "exclude": [

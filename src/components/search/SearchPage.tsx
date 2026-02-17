@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { searchProduct } from "../../../Request/requests";
-import { Product } from "../../../typing";
+import { Product } from "../../utilities/typing";
 import ProductCard from "../homepage/product/ProductCard";
 import { motion } from "framer-motion";
 

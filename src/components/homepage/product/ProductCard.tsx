@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Product } from "../../../../typing";
+import { Product } from "../../../utilities/typing";
 import Image from "next/image";
 import Link from "next/link";
 import { Heart, ShoppingBagIcon } from "lucide-react";
