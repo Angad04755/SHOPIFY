@@ -5,28 +5,34 @@ import { useState, useEffect } from "react";
 import { getAllProduct } from "../../../Request/requests";
 import { Product } from "../../../typing";
 import { SearchIcon } from "lucide-react";
+
 const SearchBox = () => {
 
   const [query, setQuery] = useState("");
   const [products, setProducts] = useState<Product[]>([]);
   const [suggestions, setSuggestions] = useState<Product[]>([]);
+  const [isTyping, setIsTyping] = useState(false); // ✅ important
 
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
 
 
-  // ✅ Sync input with URL query (IMPORTANT)
+  // ✅ Sync query from URL (but don't show suggestions)
   useEffect(() => {
 
     const urlQuery = searchParams.get("query") || "";
 
     setQuery(urlQuery);
 
+    setSuggestions([]);
+
+    setIsTyping(false); // ✅ important
+
   }, [searchParams]);
 
 
-  // ✅ Fetch all products once
+  // ✅ Fetch products
   useEffect(() => {
 
     const fetchProducts = async () => {
@@ -50,19 +56,10 @@ const SearchBox = () => {
   }, []);
 
 
-  // ✅ Clear search when going home
+  // ✅ Filter suggestions ONLY when typing
   useEffect(() => {
-     setSuggestions([]);
-    if (pathname === "/") {
-      setQuery("");
 
-    }
-
-  }, [pathname]);
-
-
-  // ✅ Filter suggestions
-  useEffect(() => {
+    if (!isTyping) return;
 
     if (!query.trim()) {
 
@@ -80,10 +77,20 @@ const SearchBox = () => {
 
     setSuggestions(filtered);
 
-  }, [query, products]);
+  }, [query, products, isTyping]);
 
 
-  // ✅ Redirect to search page
+  // ✅ Handle typing
+  const handleChange = (value: string) => {
+
+    setQuery(value);
+
+    setIsTyping(true);
+
+  };
+
+
+  // ✅ Search redirect
   const goToSearch = (value: string) => {
 
     const trimmed = value.trim();
@@ -94,12 +101,13 @@ const SearchBox = () => {
 
     setSuggestions([]);
 
+    setIsTyping(false);
+
     router.push(`/search?query=${trimmed}`);
 
   };
 
 
-  // ✅ Submit handler
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
 
     e.preventDefault();
@@ -115,76 +123,37 @@ const SearchBox = () => {
 
       <div className="w-full max-w-2xl">
 
-        {/* Search Form */}
-
         <form
           onSubmit={handleSearch}
-          className="
-            flex items-center
-            rounded-full
-            border border-gray-300
-            bg-white
-            transition
-            focus-within:ring-2 focus-within:ring-blue-500
-          "
+          className="flex items-center rounded-full border border-gray-300 bg-white focus-within:ring-2 focus-within:ring-blue-500 transition duration-300"
         >
+
           <SearchIcon size={30} color="gray" className="px-1"/>
+
           <input
             type="text"
             value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            onChange={(e) => handleChange(e.target.value)}
             placeholder="Search products..."
-            className="
-              flex-1
-              rounded-l-full
-              px-4 py-2
-              text-sm sm:text-base
-              text-gray-700
-              placeholder-gray-400
-              outline-none
-            "
+            className="flex-1 px-4 py-2 outline-none"
           />
-
 
         </form>
 
 
-        {/* Suggestions Dropdown */}
-
         {suggestions.length > 0 && (
 
-          <div
-            className="
-              absolute z-50 mt-2 w-full
-              rounded-2xl
-              bg-white/80 backdrop-blur-lg
-              shadow-2xl
-              border border-gray-200
-              overflow-hidden
-              transform transition-all duration-200 ease-out
-            "
-          >
+          <div className="absolute z-50 mt-2 w-full rounded-2xl bg-white backdrop-blur-md shadow-2xl border">
 
             {suggestions.map(item => (
 
               <div
                 key={item.id}
                 onClick={() => goToSearch(item.title)}
-                className="
-                  px-4 py-3
-                  cursor-pointer
-                  text-sm text-gray-700
-                  hover:bg-blue-50
-                  transition
-                  border-b last:border-b-0
-                "
+                className="px-4 py-3 cursor-pointer hover:bg-blue-50"
               >
 
-                <span className="font-medium">
-
-                  {item.title}
-
-                </span>
+                {item.title}
 
               </div>
 

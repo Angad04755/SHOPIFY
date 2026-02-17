@@ -31,7 +31,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Suspense fallback={<div>Updating your search...</div>}>
+        <Suspense>
         <Nav/>
         </Suspense>
 
