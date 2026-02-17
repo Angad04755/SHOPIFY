@@ -5,7 +5,6 @@ import { useState, useEffect } from "react";
 import { getAllProduct } from "../../../Request/requests";
 import { Product } from "../../../typing";
 import { SearchIcon } from "lucide-react";
-
 const SearchBox = () => {
 
   const [query, setQuery] = useState("");
@@ -18,7 +17,12 @@ const SearchBox = () => {
   const searchParams = useSearchParams();
 
 
-  // ✅ Sync query from URL (but don't show suggestions)
+  useEffect(() => {
+    if (pathname === "/") {
+      setQuery("");
+    }
+  }, [pathname]);
+  // Sync query from URL (but don't show suggestions)
   useEffect(() => {
 
   const urlQuery = searchParams.get("query");
@@ -33,7 +37,7 @@ const SearchBox = () => {
 
 }, [searchParams]);
 
-  // ✅ Fetch products
+  //  Fetch products
   useEffect(() => {
 
     const fetchProducts = async () => {
@@ -57,7 +61,7 @@ const SearchBox = () => {
   }, []);
 
 
-  // ✅ Filter suggestions ONLY when typing
+  //  Filter suggestions ONLY when typing
   useEffect(() => {
 
     if (!isTyping) return;
@@ -81,7 +85,7 @@ const SearchBox = () => {
   }, [query, products, isTyping]);
 
 
-  // ✅ Handle typing
+  //  Handle typing
   const handleChange = (value: string) => {
 
     setQuery(value);
