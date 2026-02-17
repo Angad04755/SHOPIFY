@@ -18,7 +18,7 @@ const SearchBox = () => {
 
 
   useEffect(() => {
-    if (pathname === "/") {
+    if (pathname === "/" || pathname === "/cart") {
       setQuery("");
     }
   }, [pathname]);
