@@ -1,64 +1,122 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import { getAllProduct } from "../../../Request/requests";
 import { Product } from "../../../typing";
-
+import { SearchIcon } from "lucide-react";
 const SearchBox = () => {
+
   const [query, setQuery] = useState("");
   const [products, setProducts] = useState<Product[]>([]);
   const [suggestions, setSuggestions] = useState<Product[]>([]);
-  const [showSuggestions, setShowSuggestions] = useState(false);
 
+  const pathname = usePathname();
   const router = useRouter();
+  const searchParams = useSearchParams();
 
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
 
-    const trimmedQuery = query.trim();
-    if (!trimmedQuery) return;
-
-    router.push(`/search?query=${trimmedQuery}`);
-    setShowSuggestions(false);
-  };
-
-  // Fetch all products once
+  // ✅ Sync input with URL query (IMPORTANT)
   useEffect(() => {
+
+    const urlQuery = searchParams.get("query") || "";
+
+    setQuery(urlQuery);
+
+  }, [searchParams]);
+
+
+  // ✅ Fetch all products once
+  useEffect(() => {
+
     const fetchProducts = async () => {
+
       try {
+
         const res = await getAllProduct();
+
         setProducts(res);
+
       } catch (error) {
+
         console.error(error);
+
       }
+
     };
 
     fetchProducts();
+
   }, []);
 
-  // Filter suggestions
+
+  // ✅ Clear search when going home
   useEffect(() => {
+     setSuggestions([]);
+    if (pathname === "/") {
+      setQuery("");
+
+    }
+
+  }, [pathname]);
+
+
+  // ✅ Filter suggestions
+  useEffect(() => {
+
     if (!query.trim()) {
+
       setSuggestions([]);
-      setShowSuggestions(false);
+
       return;
+
     }
 
     const filtered = products
-      .filter((item) =>
+      .filter(item =>
         item.title.toLowerCase().includes(query.toLowerCase())
       )
       .slice(0, 6);
 
     setSuggestions(filtered);
-    setShowSuggestions(filtered.length > 0);
+
   }, [query, products]);
 
+
+  // ✅ Redirect to search page
+  const goToSearch = (value: string) => {
+
+    const trimmed = value.trim();
+
+    if (!trimmed) return;
+
+    setQuery(trimmed);
+
+    setSuggestions([]);
+
+    router.push(`/search?query=${trimmed}`);
+
+  };
+
+
+  // ✅ Submit handler
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+
+    e.preventDefault();
+
+    goToSearch(query);
+
+  };
+
+
   return (
+
     <div className="relative w-full flex justify-center">
+
       <div className="w-full max-w-2xl">
+
         {/* Search Form */}
+
         <form
           onSubmit={handleSearch}
           className="
@@ -70,6 +128,7 @@ const SearchBox = () => {
             focus-within:ring-2 focus-within:ring-blue-500
           "
         >
+          <SearchIcon size={30} color="gray" className="px-1"/>
           <input
             type="text"
             value={query}
@@ -86,28 +145,16 @@ const SearchBox = () => {
             "
           />
 
-          <button
-            type="submit"
-            className="
-              rounded-r-full
-              bg-blue-600
-              px-4 py-2 sm:px-6
-              text-sm sm:text-base
-              font-medium
-              text-white
-              transition
-              hover:bg-blue-700
-              focus:outline-none focus:ring-2 focus:ring-blue-500
-            "
-          >
-            Search
-          </button>
+
         </form>
 
+
         {/* Suggestions Dropdown */}
+
         {suggestions.length > 0 && (
+
           <div
-            className={`
+            className="
               absolute z-50 mt-2 w-full
               rounded-2xl
               bg-white/80 backdrop-blur-lg
@@ -115,22 +162,14 @@ const SearchBox = () => {
               border border-gray-200
               overflow-hidden
               transform transition-all duration-200 ease-out
-              ${
-                showSuggestions
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 -translate-y-2"
-              }
-            `}
+            "
           >
-            {suggestions.map((item) => (
+
+            {suggestions.map(item => (
+
               <div
                 key={item.id}
-                onClick={() => {
-                  router.push(`/product/product-details/${item.id}`);
-                  setQuery("");
-                  setSuggestions([]);
-                  setShowSuggestions(false);
-                }}
+                onClick={() => goToSearch(item.title)}
                 className="
                   px-4 py-3
                   cursor-pointer
@@ -140,14 +179,27 @@ const SearchBox = () => {
                   border-b last:border-b-0
                 "
               >
-                <span className="font-medium">{item.title}</span>
+
+                <span className="font-medium">
+
+                  {item.title}
+
+                </span>
+
               </div>
+
             ))}
+
           </div>
+
         )}
+
       </div>
+
     </div>
+
   );
+
 };
 
 export default SearchBox;

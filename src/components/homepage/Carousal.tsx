@@ -15,8 +15,12 @@ const Carousel = ({ images }: ImageProps) => {
   const [animate, setAnimate] = useState(true);
   const [isPaused, setIsPaused] = useState(false);
 
-  const stopSlide = () => setIsPaused(true);
-  const startSlide = () => setIsPaused(false);
+  const stopSlide = () => { 
+    setIsPaused(true) 
+  };
+  const startSlide = () => { 
+    setIsPaused(false) 
+  };
 
   // Auto forward slide
   useEffect(() => {
@@ -43,8 +47,12 @@ const Carousel = ({ images }: ImageProps) => {
     if (!animate) requestAnimationFrame(() => setAnimate(true));
   }, [animate]);
 
-  const forward = () => setIndex((prev) => prev + 1);
-  const backward = () => setIndex((prev) => prev - 1);
+  const forward = () => {
+    setIndex((prev) => prev + 1)
+  };
+  const backward = () => {
+    setIndex((prev) => prev - 1)
+  };
 
   return (
     <motion.div
@@ -61,7 +69,8 @@ const Carousel = ({ images }: ImageProps) => {
           onMouseEnter={stopSlide}
           onMouseLeave={startSlide}
         >
-          {slides.map((src, i) => (
+          {slides.map((src, i) => {
+            return (
             <div key={i} className="min-w-full">
               <Image
                 src={src}
@@ -71,7 +80,9 @@ const Carousel = ({ images }: ImageProps) => {
                 className="rounded-2xl object-cover w-full"
               />
             </div>
-          ))}
+            )
+          }
+        )}
         </div>
 
         {/* Desktop buttons on sides */}
