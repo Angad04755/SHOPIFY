@@ -5,6 +5,7 @@ import Nav from "@/components/layout/Nav";
 import Footer from "@/components/layout/Footer";
 import StoreProvider from "@/StoreProvider/StoreProvider";
 import { Suspense } from "react";
+import { ClerkProvider } from "@clerk/nextjs";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -26,20 +27,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <StoreProvider>
+    <ClerkProvider>
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <StoreProvider>
         <Suspense>
         <Nav/>
         </Suspense>
 
         {children}
         <Footer/>
+        </StoreProvider>
         
       </body>
     </html>
-    </StoreProvider>
+    </ClerkProvider>
+    
   );
 }

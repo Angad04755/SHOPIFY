@@ -26,7 +26,7 @@ const ProductCard = ({ product }: Props) => {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-md p-4 hover:shadow-lg transition-shadow flex flex-col h-full w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-xs">
+    <article className="bg-white rounded-xl shadow-md p-4 hover:shadow-lg transition-shadow flex flex-col h-full w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-xs">
       {/* Product Image */}
       <div className="flex justify-center items-center h-40 sm:h-48 md:h-56">
         <Image
@@ -80,7 +80,7 @@ const ProductCard = ({ product }: Props) => {
           <span className="text-gray-400 text-sm">No ratings yet</span>
         )}
       </div>
-    </div>
+    </article>
   );
 };
 

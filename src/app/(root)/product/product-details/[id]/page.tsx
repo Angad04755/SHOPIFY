@@ -1,4 +1,4 @@
-import ProductDetails from "@/components/product-details/productDetails";
+import ProductDetails from "@/components/homepage/product/productDetails";
 
 interface Props {
   params: Promise<{

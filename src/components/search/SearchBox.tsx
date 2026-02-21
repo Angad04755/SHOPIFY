@@ -4,7 +4,7 @@ import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import { Product } from "../../utilities/typing";
 import { SearchIcon } from "lucide-react";
-import { searchProduct } from "../../../Request/requests";
+import { searchProduct } from "../../utilities/requests";
 
 const SearchBox = () => {
 
@@ -128,7 +128,7 @@ const SearchBox = () => {
 
         <form
           onSubmit={handleSubmit}
-          className="flex items-center rounded-full border border-gray-300 bg-white"
+          className="flex items-center rounded-full border border-gray-300 bg-white focus-within:ring-2 focus-within:ring-blue-500 transition duration-300"
         >
 
           <SearchIcon size={30} color="gray" className="px-1" />
@@ -153,7 +153,7 @@ const SearchBox = () => {
                 <div
                   key={i.id}
                   onClick={() => goToSearch(i.title)}
-                  className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                  className="px-4 py-2 hover:bg-gray-100 cursor-pointer rounded-xl"
                 >
 
                   {i.title}

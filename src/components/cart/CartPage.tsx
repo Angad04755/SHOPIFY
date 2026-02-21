@@ -11,7 +11,7 @@ import {
   clearCart,
   CartItem,
 } from "../../../store/cartSlice";
-import PaypalButton from "../ui/PaypalButton";
+import PaypalButton from "../payment/PaypalButton";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Product } from "../../../utilities/typing";
-import { getProductsByCategory } from "../../../../Request/requests";
+import { getProductsByCategory } from "../../../utilities/requests";
 import ProductCard from "./ProductCard";
 import { motion } from "framer-motion";
 

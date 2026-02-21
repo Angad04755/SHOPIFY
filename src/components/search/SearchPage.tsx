@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { searchProduct } from "../../../Request/requests";
+import { searchProduct } from "../../utilities/requests";
 import { Product } from "../../utilities/typing";
 import ProductCard from "../homepage/product/ProductCard";
 import { motion } from "framer-motion";
@@ -39,7 +39,8 @@ const SearchPage = () => {
       transition={{ duration: 0.3 }}
       className="min-h-screen bg-gray-50"
     >
-      <div className="max-w-7xl mx-auto px-4 py-8">
+      <main className="max-w-7xl mx-auto px-4 py-8">
+        <section>
         {/* SEARCH HEADER */}
         <motion.div
           initial={{ y: 10, opacity: 0 }}
@@ -112,7 +113,8 @@ const SearchPage = () => {
             ))}
           </motion.div>
         )}
-      </div>
+        </section>
+      </main>
     </motion.section>
   );
 };
