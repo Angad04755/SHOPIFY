@@ -1,6 +1,6 @@
 // import Allproducts from "@/components/homepage/product/AllProduct";
-import DesktopProducts from "@/components/homepage/product/DesktopProducts";
-import MobileProducts from "@/components/homepage/product/MobileProducts";
+import DesktopProducts from "@/components/product/DesktopProducts";
+import MobileProducts from "@/components/product/MobileProducts";
 interface props {
     params: Promise<{slug: string}>;
 }

@@ -10,7 +10,7 @@ import {
   removeItem,
   clearCart,
   CartItem,
-} from "../../../store/cartSlice";
+} from "../../../store/features/cart/cartSlice";
 import PaypalButton from "../payment/PaypalButton";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";

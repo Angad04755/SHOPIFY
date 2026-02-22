@@ -2,9 +2,9 @@
 
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
-import { Product } from "../../utilities/typing";
+import { Product } from "../../types/typing";
 import { SearchIcon } from "lucide-react";
-import { searchProduct } from "../../utilities/requests";
+import { searchProduct } from "../../lib/api/requests";
 
 const SearchBox = () => {
 
@@ -128,7 +128,7 @@ const SearchBox = () => {
 
         <form
           onSubmit={handleSubmit}
-          className="flex items-center rounded-full border border-gray-300 bg-white focus-within:ring-2 focus-within:ring-blue-500 transition duration-300"
+          className="flex items-center rounded-full border border-gray-300 bg-white focus-within:ring-2 focus-within:ring-blue-500 transition duration-150 ease-in-out"
         >
 
           <SearchIcon size={30} color="gray" className="px-1" />

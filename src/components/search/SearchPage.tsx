@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { searchProduct } from "../../utilities/requests";
-import { Product } from "../../utilities/typing";
-import ProductCard from "../homepage/product/ProductCard";
+import { searchProduct } from "../../lib/api/requests";
+import { Product } from "../../types/typing";
+import ProductCard from "../product/ProductCard";
 import { motion } from "framer-motion";
 
 const SearchPage = () => {

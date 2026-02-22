@@ -3,9 +3,10 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/layout/Nav";
 import Footer from "@/components/layout/Footer";
-import StoreProvider from "@/StoreProvider/StoreProvider";
+import StoreProvider from "@/providers/StoreProvider";
 import { Suspense } from "react";
 import { ClerkProvider } from "@clerk/nextjs";
+import { ToastContainer } from "react-toastify";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -32,6 +33,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <ToastContainer/>
         <StoreProvider>
         <Suspense>
         <Nav/>
@@ -40,6 +42,7 @@ export default function RootLayout({
         {children}
         <Footer/>
         </StoreProvider>
+        
         
       </body>
     </html>

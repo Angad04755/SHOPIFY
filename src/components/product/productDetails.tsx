@@ -3,12 +3,12 @@
 import Image from "next/image";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Product } from "../../../utilities/typing";
-import { addItem } from "../../../../store/cartSlice";
+import { Product } from "../../types/typing";
+import { addItem } from "../../../store/features/cart/cartSlice";
 import { useDispatch } from "react-redux";
-import { AddDispatch } from "../../../../store/store";
+import { AddDispatch } from "../../../store/store";
 import { motion } from "framer-motion";
-
+import AddtoCartButton from "../cart/AddtoCartButton";
 interface Props {
   id: string;
 }
@@ -87,7 +87,7 @@ export default function ProductDetails({ id }: Props) {
         </div>
 
         {/* Details Section */}
-        <div className="p-6 sm:p-8 flex flex-col justify-between">
+        <div className="p-6 sm:p-8 flex flex-col justify-between gap-5">
           <div>
             <p className="text-xs sm:text-sm uppercase tracking-wide text-gray-500">
               {product.category}
@@ -118,7 +118,7 @@ export default function ProductDetails({ id }: Props) {
           </div>
 
           {/* Add to Cart */}
-          <motion.button
+          {/* <motion.button
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
             onClick={handleAddItem}
@@ -127,7 +127,9 @@ export default function ProductDetails({ id }: Props) {
                        rounded-xl transition-all shadow-md"
           >
             🛒 Add to Cart
-          </motion.button>
+          </motion.button> */}
+         <AddtoCartButton product={product}/>
+    
         </div>
       </motion.div>
     </motion.div>
