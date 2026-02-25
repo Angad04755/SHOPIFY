@@ -6,7 +6,6 @@ export interface CartItem {
   quantity: number;
 }
 
-
 interface CartState {
   items: CartItem[];
 }
@@ -18,25 +17,39 @@ const initialState: CartState = {
 const cartSlice = createSlice({
   name: "cart",
   initialState,
+
   reducers: {
-    /* Add item to cart */
+
+    /* Load or restore full cart */
+    saveCart: (state, action: PayloadAction<CartItem[]>) => {
+      state.items = action.payload;
+    },
+
+    /* Add item */
     addItem: (state, action: PayloadAction<Product>) => {
+
       const existingItem = state.items.find(
         (item) => item.product.id === action.payload.id
       );
 
       if (existingItem) {
+
         existingItem.quantity += 1;
+
       } else {
+
         state.items.push({
           product: action.payload,
           quantity: 1,
         });
+
       }
+
     },
 
     /* Remove one quantity */
     removeItem: (state, action: PayloadAction<number>) => {
+
       const item = state.items.find(
         (item) => item.product.id === action.payload
       );
@@ -44,32 +57,41 @@ const cartSlice = createSlice({
       if (!item) return;
 
       if (item.quantity > 1) {
+
         item.quantity -= 1;
+
       } else {
+
         state.items = state.items.filter(
           (item) => item.product.id !== action.payload
         );
+
       }
+
     },
 
-    /* Remove product completely */
+    /* Remove completely */
     removeItemCompletely: (state, action: PayloadAction<number>) => {
+
       state.items = state.items.filter(
         (item) => item.product.id !== action.payload
       );
+
     },
 
     /* Clear cart */
     clearCart: (state) => {
+
       state.items = [];
+
     },
+
   },
+
 });
 
-/* -------------------- */
-/* EXPORTS             */
-/* -------------------- */
 export const {
+  saveCart,
   addItem,
   removeItem,
   removeItemCompletely,

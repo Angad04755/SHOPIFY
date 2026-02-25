@@ -1,23 +1,35 @@
-import { AddDispatch } from "../../../store/store";
-import { useDispatch, UseDispatch } from "react-redux";
+"use client";
+
+import { useDispatch } from "react-redux";
+import { addItem } from "../../../store/features/cart/cartSlice";
+import { toast } from "react-toastify";
 import Button from "../ui/Button";
 import { Product } from "@/types/typing";
-import { addItem } from "../../../store/features/cart/cartSlice";
-import {toast} from "react-toastify"
-interface ProductProps {
-    product: Product;
+
+interface Props {
+  product: Product;
 }
 
-function AddtoCartButton({product}: ProductProps) {
+export default function AddToCartButton({ product }: Props) {
 
-    const dispatch = useDispatch<AddDispatch>();
+  const dispatch = useDispatch();
 
-    function handleDispatch () {
-        dispatch(addItem(product));
-        toast.success("added to cart");
-    };
-    return (
-    <Button onClick={handleDispatch} classname="bg-black text-white px-3 py-5 rounded-xl cursor-pointer transition duration-150 active:scale-90" text="Add to Cart"/>
-    )
+  function handleAdd() {
+
+    dispatch(addItem(product));
+
+    toast.success("Added to cart");
+
+  }
+
+  return (
+
+    <Button
+      onClick={handleAdd}
+      classname="bg-black text-white px-4 py-3 rounded-xl active:scale-95 transition duration-150 cursor-pointer"
+      text="Add to Cart"
+    />
+
+  );
+
 }
-export default AddtoCartButton;

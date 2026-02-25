@@ -138,7 +138,7 @@ const Nav = () => {
               onClick={() =>
                 router.push("/sign-in")
               }
-              classname="bg-black text-white px-4 py-2 hover:bg-gray-800 transition"
+              classname="bg-black text-white px-4 py-2 hover:bg-gray-800 active:scale-95 transition duration-150 cursor-pointer rounded-lg"
             />
           </SignedOut>
 
