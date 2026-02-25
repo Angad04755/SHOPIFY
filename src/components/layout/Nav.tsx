@@ -52,7 +52,7 @@ const Nav = () => {
         initial={{ y: -80 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.4 }}
-        className={`sticky top-0 z-[100] w-full transition-all ${
+        className={`sticky top-0 z-[200] w-full transition-all ${
           scrolled
             ? "bg-white/95 backdrop-blur shadow-md"
             : "bg-white"
