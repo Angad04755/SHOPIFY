@@ -297,7 +297,10 @@ const Nav = () => {
               {/* SIGN IN BUTTON MOBILE */}
 
               <div className="p-6 border-t">
-
+                <SignedIn>
+                  <UserButton/>
+                </SignedIn>
+                <SignedOut>
                 <Button
                   text="Sign In"
                   onClick={() => {
@@ -307,8 +310,9 @@ const Nav = () => {
                       "/sign-in"
                     );
                   }}
-                  classname="w-full bg-black text-white py-3"
+                  classname="w-full bg-black text-white py-3 active:scale-95 transition duration-150"
                 />
+                </SignedOut>
 
               </div>
 
