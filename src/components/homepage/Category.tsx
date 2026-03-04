@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { getAllCategory } from "../../lib/api/requests";
+import { getAllCategory } from "../../lib/api/Requests";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 

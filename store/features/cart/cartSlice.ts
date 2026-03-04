@@ -8,90 +8,81 @@ export interface CartItem {
 
 interface CartState {
   items: CartItem[];
+  loaded: boolean; // is cart ready?
 }
 
 const initialState: CartState = {
   items: [],
+  loaded: false, // cart is not ready yet on page load
 };
 
 const cartSlice = createSlice({
   name: "cart",
   initialState,
-
   reducers: {
 
-    /* Load or restore full cart */
+    // called by AuthSync after fetching from firebase
     saveCart: (state, action: PayloadAction<CartItem[]>) => {
       state.items = action.payload;
+      state.loaded = true; // cart is now ready!
     },
 
-    /* Add item */
-    addItem: (state, action: PayloadAction<Product>) => {
+    // called when guest signs in to merge their cart
+    mergeCart: (state, action: PayloadAction<CartItem[]>) => {
+      action.payload.forEach((guestItem) => {
+        const existing = state.items.find(
+          (item) => item.product.id === guestItem.product.id
+        );
+        if (existing) {
+          existing.quantity += guestItem.quantity;
+        } else {
+          state.items.push(guestItem);
+        }
+      });
+      state.loaded = true;
+    },
 
-      const existingItem = state.items.find(
+    addItem: (state, action: PayloadAction<Product>) => {
+      const existing = state.items.find(
         (item) => item.product.id === action.payload.id
       );
-
-      if (existingItem) {
-
-        existingItem.quantity += 1;
-
+      if (existing) {
+        existing.quantity += 1;
       } else {
-
-        state.items.push({
-          product: action.payload,
-          quantity: 1,
-        });
-
+        state.items.push({ product: action.payload, quantity: 1 });
       }
-
     },
 
-    /* Remove one quantity */
     removeItem: (state, action: PayloadAction<number>) => {
-
       const item = state.items.find(
         (item) => item.product.id === action.payload
       );
-
       if (!item) return;
-
       if (item.quantity > 1) {
-
         item.quantity -= 1;
-
       } else {
-
         state.items = state.items.filter(
           (item) => item.product.id !== action.payload
         );
-
       }
-
     },
 
-    /* Remove completely */
     removeItemCompletely: (state, action: PayloadAction<number>) => {
-
       state.items = state.items.filter(
         (item) => item.product.id !== action.payload
       );
-
     },
 
-    /* Clear cart */
     clearCart: (state) => {
-
       state.items = [];
-
     },
 
   },
-
 });
 
 export const {
   saveCart,
+  mergeCart,
   addItem,
   removeItem,
   removeItemCompletely,

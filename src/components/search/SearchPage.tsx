@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { searchProduct } from "../../lib/api/requests";
+import { searchProduct } from "../../lib/api/Requests";
 import { Product } from "../../types/typing";
 import ProductCard from "../product/ProductCard";
 import { motion } from "framer-motion";
