@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, AddDispatch } from "../../../store/store";
 import Image from "next/image";
@@ -9,79 +9,15 @@ import {
   addItem,
   removeItem,
   clearCart,
-  saveCart,
-  mergeCart,
 } from "../../../store/features/cart/cartSlice";
 import PaypalButton from "../payment/PaypalButton";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { useUser } from "@clerk/nextjs";
-import { db } from "../../lib/database/Firebase";
-import { doc, getDoc, setDoc } from "firebase/firestore";
 
 const CartPage = () => {
   const dispatch = useDispatch<AddDispatch>();
   const items = useSelector((state: RootState) => state.cart.items);
-  const cartLoaded = useSelector((state: RootState) => state.cart.loaded);
   const router = useRouter();
-  const { isSignedIn, user, isLoaded } = useUser();
-
-  // load cart when user signs in
-  useEffect(() => {
-    if (!isLoaded) return;
-
-    if (!isSignedIn || !user) {
-      dispatch(clearCart());
-      return;
-    }
-
-    async function loadCart() {
-      if (!user) return;
-
-      const cartRef = doc(db, "carts", user.id);
-      const snap = await getDoc(cartRef);
-
-      const guestCartRaw = localStorage.getItem("guestCart");
-      const guestItems = guestCartRaw ? JSON.parse(guestCartRaw) : [];
-
-      if (snap.exists()) {
-        dispatch(saveCart(snap.data().items || []));
-        if (guestItems.length > 0) {
-          dispatch(mergeCart(guestItems));
-        }
-      } else {
-        dispatch(saveCart(guestItems));
-      }
-
-      localStorage.removeItem("guestCart");
-    }
-
-    loadCart();
-  }, [isLoaded, isSignedIn, user, dispatch]);
-
-  // save cart whenever it changes
-  useEffect(() => {
-    if (!isLoaded) return;
-
-    if (!isSignedIn || !user) {
-      localStorage.setItem("guestCart", JSON.stringify(items));
-      return;
-    }
-
-    if (!cartLoaded) return;
-
-    async function saveToFirebase() {
-      if (!user) return;
-      try {
-        const cartRef = doc(db, "carts", user.id);
-        await setDoc(cartRef, { items });
-      } catch (error) {
-        console.error("Failed to save cart:", error);
-      }
-    }
-
-    saveToFirebase();
-  }, [items, isLoaded, isSignedIn, user, cartLoaded]);
 
   const totalQuantity = items.reduce((total, item) => total + item.quantity, 0);
   const subtotal = Number(items.reduce((total, item) => total + item.product.price * item.quantity, 0).toFixed(2));
