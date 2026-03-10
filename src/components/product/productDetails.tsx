@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { Product } from "../../types/typing";
 import { addItem } from "../../../store/features/cart/cartSlice";
 import { useDispatch } from "react-redux";
-import { AddDispatch } from "../../../store/store";
+import { AppDispatch } from "../../../store/store";
 import { motion } from "framer-motion";
 import AddtoCartButton from "../cart/AddtoCartButton";
 interface Props {
@@ -14,7 +14,7 @@ interface Props {
 }
 
 export default function ProductDetails({ id }: Props) {
-  const dispatch = useDispatch<AddDispatch>();
+  const dispatch = useDispatch<AppDispatch>();
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
 

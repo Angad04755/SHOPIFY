@@ -7,7 +7,7 @@ import Link from "next/link";
 import { Heart, ShoppingBagIcon } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "../../../store/features/cart/cartSlice";
-import { AddDispatch } from "../../../store/store";
+import { AppDispatch } from "../../../store/store";
 
 type Props = {
   product: Product;
@@ -19,7 +19,7 @@ const ProductCard = ({ product }: Props) => {
   const ratingArray = new Array(num).fill(0);
 
   
-  const dispatch = useDispatch<AddDispatch>();
+  const dispatch = useDispatch<AppDispatch>();
 
   const addToCartHandler = () => {
     dispatch(addItem(product));
