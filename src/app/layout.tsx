@@ -7,8 +7,6 @@ import StoreProvider from "@/providers/StoreProvider";
 import { Suspense } from "react";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ToastContainer } from "react-toastify";
-import { AuthSync } from "@/auth/AuthSync";
-import { CartSync } from "@/auth/CartSync";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -38,8 +36,6 @@ export default function RootLayout({
         
         <ToastContainer/>
         <StoreProvider>
-          <AuthSync/>
-          <CartSync/>
         <Suspense>
         <Nav/>
         </Suspense>

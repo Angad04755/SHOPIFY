@@ -24,6 +24,7 @@
     "react-redux": "^9.2.0",
     "react-spinners": "^0.17.0",
     "react-toastify": "^11.0.5",
+    "redux-persist": "^6.0.0",
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.4.0",
     "zod": "^4.1.11"

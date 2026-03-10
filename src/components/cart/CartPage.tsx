@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState, AddDispatch } from "../../../store/store";
+import { RootState, AppDispatch } from "../../../store/store";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -15,7 +15,7 @@ import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 
 const CartPage = () => {
-  const dispatch = useDispatch<AddDispatch>();
+  const dispatch = useDispatch<AppDispatch>();
   const items = useSelector((state: RootState) => state.cart.items);
   const router = useRouter();
 

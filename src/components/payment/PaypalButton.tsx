@@ -4,7 +4,8 @@ import {
   PayPalButtons,
   PayPalScriptProvider,
 } from "@paypal/react-paypal-js";
-import { useUser } from "@clerk/nextjs";
+import { RootState } from "../../../store/store";
+import { useSelector, UseSelector } from "react-redux";
 interface PaypalButtonProps {
   amount: string;
   onSuccess: (details: any) => void;
@@ -13,7 +14,7 @@ interface PaypalButtonProps {
 
 const PaypalButton = ({ amount, onSuccess, onError }: PaypalButtonProps) => {
   const formattedAmount = Number(amount).toFixed(2);
-  const {isSignedIn} = useUser();
+  const isAuthenticaled = useSelector((state: RootState) => state.auth.isAuthinticated);
   return (
     <PayPalScriptProvider
       options={{
@@ -22,7 +23,7 @@ const PaypalButton = ({ amount, onSuccess, onError }: PaypalButtonProps) => {
         intent: "capture",
       }}
     >
-      <PayPalButtons disabled={!isSignedIn}
+      <PayPalButtons disabled={!isAuthenticaled}
         fundingSource={FUNDING.PAYPAL}
         createOrder={(data, actions) =>
           actions.order.create({
@@ -47,7 +48,7 @@ const PaypalButton = ({ amount, onSuccess, onError }: PaypalButtonProps) => {
           onError?.(err);
         }}
       />
-      {!isSignedIn && (
+      {!isAuthenticaled && (
         <p className="text-red-500 text-base"> Please Sign in to checkout</p>
       )}
     </PayPalScriptProvider>
