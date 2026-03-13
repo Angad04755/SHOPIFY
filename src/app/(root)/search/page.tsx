@@ -5,8 +5,10 @@ export const search = "force-dynamic";
 const SearchPage = dynamic(() => import("@/components/search/SearchPage"));
 const Page = () => {
   return (
-    <Suspense fallback={<div className="mx-auto"><ClipLoader size={35} color="black"/></div>}>
+    <Suspense>
+      <Suspense>
     <SearchPage/>
+    </Suspense>
     </Suspense>
   )
 }

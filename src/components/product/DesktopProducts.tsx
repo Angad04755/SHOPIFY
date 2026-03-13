@@ -5,18 +5,16 @@ import { Product } from "../../types/typing";
 import { getProductsByCategory } from "../../lib/api/ApiRquests";
 import ProductCard from "./ProductCard";
 import { motion } from "framer-motion";
-
-interface Props {
-  categorySlug: string;
-}
-
+import { useParams } from "next/navigation";
 const LIMIT = 8;
 
-const DesktopProducts = ({ categorySlug }: Props) => {
+const DesktopProducts = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [skip, setSkip] = useState(0);
   const [loading, setLoading] = useState(false);
   const [isLastPage, setIsLastPage] = useState(false);
+  const params = useParams();
+  const categorySlug = params.slug as string;
 
   useEffect(() => {
     const fetchProducts = async () => {

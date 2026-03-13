@@ -5,19 +5,18 @@ import { Product } from "../../types/typing";
 import { getProductsByCategory } from "../../lib/api/ApiRquests";
 import ProductCard from "./ProductCard";
 import { motion } from "framer-motion";
+import { useParams } from "next/navigation";
 
-interface Props {
-  categorySlug: string;
-}
 
 const LIMIT = 6;
 
-const MobileProducts = ({ categorySlug }: Props) => {
+const MobileProducts = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [skip, setSkip] = useState(0);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
-
+  const params = useParams();
+  const categorySlug = params.slug as string
   const observerTarget = useRef<HTMLDivElement | null>(null);
 
   const loadMoreProducts = async () => {

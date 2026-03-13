@@ -12,7 +12,7 @@ interface Props {
 export default async function Page({ params }: Props) {
   const { id } = await params;
   return ( 
-  <Suspense fallback={<div className="mx-auto"><ClipLoader size={35} color="black"/></div>}>
+  <Suspense fallback={<div className="flex justify-center items-center"><ClipLoader size={55} color="black"/></div>}>
   <ProductDetails id={id}/>
   </Suspense>
   )
