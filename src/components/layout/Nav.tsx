@@ -50,8 +50,8 @@ const Nav = () => {
         transition={{ duration: 0.4 }}
         className={`sticky top-0 z-[200] w-full transition-all ${
           scrolled
-            ? "bg-white/95 backdrop-blur shadow-md"
-            : "bg-white"
+            ? "bg-indigo-100 backdrop-blur shadow-md"
+            : "bg-indigo-100"
         }`}
       >
         <nav className="container mx-auto px-4 h-[70px] flex items-center justify-between gap-4">

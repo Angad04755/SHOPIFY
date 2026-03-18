@@ -43,15 +43,11 @@ const Category = () => {
   }
 
   return (
-    <section className="relative pt-5 pb-24 bg-gradient-to-br from-slate-50 via-white to-indigo-50">
+    <section className="relative pt-5 pb-24 bg-gradient-to-b from-azure via-red-400 to-orange-200" style={{animation: "category 0.6s ease-in-out"}}>
       <div className="container w-11/12 md:w-4/5 mx-auto">
 
         {/* Heading */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
-          viewport={{ once: true }}
+        <div
           className="text-center mb-16"
         >
           <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold text-gray-900">
@@ -63,58 +59,31 @@ const Category = () => {
           </p>
 
           <div className="w-16 h-[3px] bg-gradient-to-r from-indigo-500 to-blue-500 mx-auto mt-6 rounded-full" />
-        </motion.div>
+        </div>
 
         {/* Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-8">
           {categories.map((category, index) => (
-            <motion.div
+            <div
               key={category.slug}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{
-                delay: index * 0.02,
-                duration: 0.2,
-                ease: "easeOut",
-              }}
-              viewport={{ once: true }}
               
-              whileTap={{ scale: 0.90 }}
               onClick={() =>
                 router.push(
                   `category/${category.name.replace(" ", "-")}`
                 )
               }
               className="
-                relative overflow-hidden
-                p-8 rounded-3xl cursor-pointer
-                bg-white border border-gray-200
-                shadow-sm hover:shadow-2xl
-                transition-all duration-300
-                group
+                bg-white text-black py-10 cursor-pointer hover:ring-2 hover:ring-blue-400 transition duration-300 ease-in-out rounded-2xl hover:bg-black hover:text-white
               "
             >
-              {/* Hover glow */}
-              <div
-                className="
-                  absolute inset-0 opacity-0 group-hover:opacity-100
-                  transition-opacity duration-300
-                  bg-gradient-to-br from-indigo-50 via-transparent to-blue-50
-                "
-              />
+              
 
               <p
-                className="
-                  relative z-10
-                  capitalize font-semibold
-                  text-gray-800 text-[15px] md:text-lg sm:text-md
-                  group-hover:text-indigo-600
-                  transition-colors duration-300 text-center
-                "
+                className="text-center"
               >
                 {category.name}
               </p>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

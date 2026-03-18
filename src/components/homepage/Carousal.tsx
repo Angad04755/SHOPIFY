@@ -101,7 +101,7 @@ const Carousel = ({ images }: ImageProps) => {
       </div>
 
       {/* Mobile buttons below carousel */}
-      <div className="flex justify-center gap-6 mt-3 sm:hidden">
+      <div className="flex justify-center gap-6 mt-3 sm:hidden pb-5">
         <button
           onClick={backward}
           className="bg-black/40 text-white px-6 py-2 rounded-full hover:bg-black/60 transition-all duration-300"
