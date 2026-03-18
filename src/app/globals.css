@@ -119,10 +119,6 @@
 }
 
 
-* {
-  box-sizing: border-box;
-}
-
 @keyframes category {
   from {
     opacity: 0;
