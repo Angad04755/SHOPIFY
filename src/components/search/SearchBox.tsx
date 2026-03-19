@@ -122,16 +122,16 @@ const SearchBox = () => {
 
   return (
 
-    <div className="relative w-full flex justify-center">
+    <div className="w-full flex justify-center">
 
-      <div className="w-full max-w-2xl">
+      <div className="w-full">
 
         <form
           onSubmit={handleSubmit}
-          className="flex items-center rounded-full border border-gray-300 bg-white focus-within:ring-2 focus-within:ring-blue-500 transition duration-150 ease-in-out"
+          className="flex items-center justify-between gap-23px rounded-full border border-gray-300 bg-white focus-within:ring-2 focus-within:ring-blue-500 transition duration-150 ease-in-out"
         >
 
-          <SearchIcon size={30} color="gray" className="px-1" />
+          <SearchIcon size={30} color="gray" className="px-1 " />
 
           <input
             type="text"
@@ -146,7 +146,7 @@ const SearchBox = () => {
 
         {suggestions.length > 0 && (
 
-          <div className="absolute z-50 mt-2 w-full rounded-xl bg-white shadow border">
+          <div className="absolute w-[345px] md:w-[420px] mt-2 z-50 rounded-xl bg-white shadow border">
 
             {suggestions.map((i) => {
               return (

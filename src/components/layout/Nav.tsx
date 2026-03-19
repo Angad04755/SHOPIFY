@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from "next/link";
@@ -11,17 +10,14 @@ import { signIn, signOut } from "../../../store/features/auth/authSlice";
 import { motion, AnimatePresence } from "framer-motion";
 import SearchBox from "../search/SearchBox";
 import Button from "../ui/Button";
-import { useRouter } from "next/navigation";
 
 const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  const router = useRouter();
   const dispatch = useDispatch();
 
   const items = useSelector((state: RootState) => state.cart.items);
-
   const isAuthenticated = useSelector(
     (state: RootState) => state.auth.isAuthinticated
   );
@@ -33,17 +29,14 @@ const Nav = () => {
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
-
     window.addEventListener("scroll", handleScroll);
-
     return () =>
       window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
     <>
-      {/* ================= HEADER ================= */}
-
+      {/* HEADER */}
       <motion.header
         initial={{ y: -80 }}
         animate={{ y: 0 }}
@@ -54,10 +47,9 @@ const Nav = () => {
             : "bg-indigo-100"
         }`}
       >
-        <nav className="container mx-auto px-4 h-[70px] flex items-center justify-between gap-4">
+        <nav className="container mx-auto px-4 h-[70px] flex items-center justify-between gap-2 lg:gap-4">
 
           {/* LOGO */}
-
           <Link href="/" className="flex items-center gap-2">
             <Image
               src="/images/logo.png"
@@ -66,31 +58,43 @@ const Nav = () => {
               height={44}
               priority
             />
-
-            <span className="text-xl sm:text-2xl font-bold">
+            <span className="text-lg md:text-xl lg:text-2xl font-bold">
               Shopify
             </span>
           </Link>
 
-          {/* SEARCH DESKTOP */}
-
-          <div className="hidden md:block w-full max-w-md">
+          {/* DESKTOP SEARCH */}
+          <div className="hidden md:block w-full md:w-[420px] ml-[50px]">
             <SearchBox />
           </div>
 
-          {/* RIGHT SIDE DESKTOP */}
+          {/* TABLET VIEW */}
+          <div className="hidden md:flex lg:hidden items-center gap-4 flex-1 justify-end">
+            {/* <div className="w-full max-w-xs">
+              <SearchBox />
+            </div> */}
 
-          <div className="hidden md:flex items-center gap-6">
+            <Link href="/cart" className="">
+              <ShoppingCart />
+              {totalQuantity > 0 && (
+                <span className="absolute mt-[-35px] ml-[15px] w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
+                  {totalQuantity}
+                </span>
+              )}
+            </Link>
 
-            {/* FAVORITES */}
+            <button onClick={() => setIsOpen(true)}>
+              <Menu size={26} />
+            </button>
+          </div>
+
+          {/* DESKTOP RIGHT */}
+          <div className="hidden lg:flex items-center gap-6">
 
             <HeartIcon className="cursor-pointer hover:text-red-500 transition" />
 
-            {/* CART */}
-
             <Link href="/cart" className="relative">
               <ShoppingCart />
-
               {totalQuantity > 0 && (
                 <span className="absolute -top-2 -right-2 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
                   {totalQuantity}
@@ -98,46 +102,39 @@ const Nav = () => {
               )}
             </Link>
 
-            {/* AUTH BUTTON */}
-
             {isAuthenticated ? (
               <Button
                 text="Sign Out"
                 onClick={() => dispatch(signOut())}
-                classname="bg-black text-white px-4 py-2 hover:bg-gray-800 active:scale-95 transition duration-150 cursor-pointer rounded-lg"
+                classname="bg-black text-white px-4 py-2 hover:bg-gray-800 active:scale-95 transition duration-150 rounded-lg"
               />
             ) : (
               <Button
                 text="Sign In"
                 onClick={() => dispatch(signIn())}
-                classname="bg-black text-white px-4 py-2 hover:bg-gray-800 active:scale-95 transition duration-150 cursor-pointer rounded-lg"
+                classname="bg-black text-white px-4 py-2 hover:bg-gray-800 active:scale-95 transition duration-150 rounded-lg"
               />
             )}
 
           </div>
 
           {/* MOBILE MENU BUTTON */}
-
           <button
             onClick={() => setIsOpen(true)}
             className="md:hidden"
-            aria-label="Open menu"
           >
             <Menu size={28} />
           </button>
 
         </nav>
 
-        {/* SEARCH MOBILE */}
-
+        {/* MOBILE SEARCH */}
         <div className="md:hidden px-4 pb-3">
           <SearchBox />
         </div>
-
       </motion.header>
 
-      {/* ================= MOBILE SIDEBAR ================= */}
-
+      {/* MOBILE SIDEBAR */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -148,14 +145,12 @@ const Nav = () => {
           >
 
             {/* OVERLAY */}
-
             <div
               className="absolute inset-0 bg-black/40"
               onClick={() => setIsOpen(false)}
             />
 
             {/* SIDEBAR */}
-
             <motion.aside
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
@@ -168,30 +163,19 @@ const Nav = () => {
               className="absolute right-0 top-0 h-full w-[85%] max-w-[320px] bg-white shadow-xl flex flex-col"
             >
 
-              {/* TOP SECTION */}
-
               <div className="p-6 flex flex-col gap-6 flex-grow">
 
-                {/* HEADER */}
-
                 <div className="flex justify-between items-center">
-                  <h2 className="text-lg font-semibold">
-                    Menu
-                  </h2>
-
+                  <h2 className="text-lg font-semibold">Menu</h2>
                   <button onClick={() => setIsOpen(false)}>
                     <X size={24} />
                   </button>
                 </div>
 
-                {/* FAVORITES */}
-
                 <div className="flex items-center gap-3 border p-3 rounded-lg">
                   <HeartIcon />
                   <span>Favorites</span>
                 </div>
-
-                {/* CART */}
 
                 <Link
                   href="/cart"
@@ -207,13 +191,9 @@ const Nav = () => {
                     </span>
                   )}
                 </Link>
-
               </div>
 
-              {/* AUTH BUTTON MOBILE */}
-
               <div className="p-6 border-t">
-
                 {isAuthenticated ? (
                   <Button
                     text="Sign Out"
@@ -233,11 +213,9 @@ const Nav = () => {
                     classname="w-full bg-black text-white py-3 active:scale-95 transition duration-150"
                   />
                 )}
-
               </div>
 
             </motion.aside>
-
           </motion.div>
         )}
       </AnimatePresence>
@@ -246,4 +224,3 @@ const Nav = () => {
 };
 
 export default Nav;
-
