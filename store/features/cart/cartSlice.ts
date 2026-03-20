@@ -1,19 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Product } from "../../../src/types/typing";
-
-export interface CartItem {
-  product: Product;
-  quantity: number;
-}
+import { CartItem } from "../../../src/types/typing";
 
 interface CartState {
   items: CartItem[];
-  loaded: boolean; // is cart ready?
 }
 
 const initialState: CartState = {
   items: [],
-  loaded: false, // cart is not ready yet on page load
 };
 
 const cartSlice = createSlice({
@@ -24,7 +18,6 @@ const cartSlice = createSlice({
     // called by AuthSync after fetching from firebase
     saveCart: (state, action: PayloadAction<CartItem[]>) => {
       state.items = action.payload;
-      state.loaded = true; // cart is now ready!
     },
 
     // called when guest signs in to merge their cart
@@ -39,7 +32,6 @@ const cartSlice = createSlice({
           state.items.push(guestItem);
         }
       });
-      state.loaded = true;
     },
 
     addItem: (state, action: PayloadAction<Product>) => {

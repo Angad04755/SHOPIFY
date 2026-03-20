@@ -11,3 +11,8 @@ export type Product = {
   thumbnail: string;
   images: string[];
 }
+
+export type CartItem = {
+product: Product;
+quantity: number;
+}
