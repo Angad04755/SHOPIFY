@@ -1,4 +1,5 @@
 import axios from "axios";
+import { ParamValue } from "next/dist/server/request/params";
 
 export async function getAllCategory() {
   const res = await axios.get("https://dummyjson.com/products/categories");
@@ -13,14 +14,14 @@ export async function getAllProduct() {
 }
 
 export async function getProductsByCategory(
-  category: string,
+  category: ParamValue,
   limit: number,
   skip: number
 ) {
   const res = await axios.get(
     `https://dummyjson.com/products/category/${category}?limit=${limit}&skip=${skip}`
   );
-  return res.data;
+  return res.data.products;
 }
 
 export async function searchProduct(query: string) {

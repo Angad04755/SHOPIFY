@@ -9,17 +9,20 @@ import {
   addItem,
   removeItem,
   clearCart,
+  removeItemCompletely,
 } from "../../../store/features/cart/cartSlice";
 import PaypalButton from "../payment/PaypalButton";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import { Trash2 } from "lucide-react";
 
 const CartPage = () => {
   const dispatch = useDispatch<AppDispatch>();
   const items = useSelector((state: RootState) => state.cart.items);
   const router = useRouter();
 
-  const totalQuantity = items.reduce((total, item) => total + item.quantity, 0);
+  const totalQuantity = 
+  items.reduce((total, item) => total + item.quantity, 0);
   const subtotal = Number(items.reduce((total, item) => total + item.product.price * item.quantity, 0).toFixed(2));
   const vat = Number((subtotal * 0.15).toFixed(2));
   const totalPriceVat = Number((subtotal + vat).toFixed(2));
@@ -34,11 +37,11 @@ const CartPage = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.35 }}
-      className="min-h-screen bg-gray-50 py-10"
+      className="bg-gray-50 py-10"
     >
       {/* EMPTY STATE */}
       {items.length === 0 && (
-        <div className="flex flex-col items-center justify-center h-[70vh] text-center px-4">
+        <div className="flex flex-col items-center justify-center min-h-screen text-center px-4">
           <Image src="/images/cart.svg" alt="empty" width={280} height={280} />
           <h2 className="mt-6 text-xl font-semibold text-gray-800">
             Your cart is empty
@@ -106,6 +109,7 @@ const CartPage = () => {
                     >
                       Remove
                     </button>
+                    <div><Trash2 color="black" size={35} className="hover:fill-red-400 cursor-pointer transition-all duration-300" onClick={() => dispatch(removeItemCompletely(item.product.id))}/></div>
                   </div>
                 </div>
               </motion.div>

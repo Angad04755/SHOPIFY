@@ -1,76 +1,44 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { Product } from "../../types/typing";
+import { useState, useEffect } from "react";
 import { getProductsByCategory } from "../../lib/api/ApiRquests";
 import ProductCard from "./ProductCard";
 import { motion } from "framer-motion";
 import { useParams } from "next/navigation";
-const LIMIT = 8;
+import { useQuery } from "@tanstack/react-query";
+import { Product } from "@/types/typing";
+
+const LIMIT = 4;
 
 const DesktopProducts = () => {
-  const [products, setProducts] = useState<Product[]>([]);
   const [skip, setSkip] = useState(0);
-  const [loading, setLoading] = useState(false);
-  const [isLastPage, setIsLastPage] = useState(false);
-  const params = useParams();
-  const categorySlug = params.slug as string;
+  const { slug } = useParams();
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        setLoading(true);
+  const { data = [], isLoading } = useQuery<Product[]>({
+    queryKey: ["products", slug, skip],
+    queryFn: () => getProductsByCategory(slug, LIMIT, skip),
+  });
 
-        const data = await getProductsByCategory(
-          categorySlug,
-          LIMIT,
-          skip
-        );
+  const isLastPage = skip > data.length;
 
-        setProducts(data.products);
-
-        setIsLastPage(skip + LIMIT >= data.total);
-      } catch (error) {
-        console.error("Failed to load products", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProducts();
-  }, [categorySlug, skip]);
-
-  const handleNext = () => {
-    setSkip((prev) => prev + LIMIT)
-  }
-  const handlePrev = () => {
-    setSkip((prev) => prev - LIMIT)
-  }
-
-  // Scroll to top (Myntra-like)
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [skip]);
 
   return (
     <section className="max-w-7xl mx-auto px-6 py-8">
-      <h1 className="text-2xl font-semibold mb-6 capitalize">
-        {categorySlug.replace(/-/g, " ")}
-      </h1>
+      <h1 className="text-2xl font-semibold mb-6 capitalize">{slug}</h1>
 
-      {loading && (
-        <p className="text-center text-gray-500 mb-4">
-          Loading products...
-        </p>
+      {isLoading && (
+        <p className="text-center text-gray-500 mb-4">Loading products...</p>
       )}
 
-      {/* Stable grid – no forced remount */}
       <motion.div
         initial={false}
         animate={{ opacity: 1 }}
         className="grid grid-cols-4 gap-6"
       >
-        {products.map((product) => (
+        {data.map((product) => (
           <motion.div
             key={product.id}
             initial={{ opacity: 0, y: 15 }}
@@ -82,11 +50,10 @@ const DesktopProducts = () => {
         ))}
       </motion.div>
 
-      {/* Pagination */}
       <div className="flex justify-center gap-4 mt-8">
         <button
           disabled={skip === 0}
-          onClick={handlePrev}
+          onClick={() => setSkip((prev) => prev - LIMIT)}
           className="px-5 py-2 border rounded-md disabled:opacity-40"
         >
           Previous
@@ -94,7 +61,7 @@ const DesktopProducts = () => {
 
         <button
           disabled={isLastPage}
-          onClick={handleNext}
+          onClick={() => setSkip((prev) => prev + LIMIT)}
           className="px-5 py-2 border rounded-md disabled:opacity-40"
         >
           Next

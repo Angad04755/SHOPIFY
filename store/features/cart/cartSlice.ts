@@ -15,25 +15,6 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
 
-    // called by AuthSync after fetching from firebase
-    saveCart: (state, action: PayloadAction<CartItem[]>) => {
-      state.items = action.payload;
-    },
-
-    // called when guest signs in to merge their cart
-    mergeCart: (state, action: PayloadAction<CartItem[]>) => {
-      action.payload.forEach((guestItem) => {
-        const existing = state.items.find(
-          (item) => item.product.id === guestItem.product.id
-        );
-        if (existing) {
-          existing.quantity += guestItem.quantity;
-        } else {
-          state.items.push(guestItem);
-        }
-      });
-    },
-
     addItem: (state, action: PayloadAction<Product>) => {
       const existing = state.items.find(
         (item) => item.product.id === action.payload.id
@@ -73,8 +54,6 @@ const cartSlice = createSlice({
 });
 
 export const {
-  saveCart,
-  mergeCart,
   addItem,
   removeItem,
   removeItemCompletely,
