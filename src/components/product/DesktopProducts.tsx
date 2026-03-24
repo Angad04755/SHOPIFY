@@ -19,12 +19,9 @@ const DesktopProducts = () => {
     queryFn: () => getProductsByCategory(slug, LIMIT, skip),
   });
 
-  const isLastPage = skip > data.length;
+  const isLastPage = data.length < LIMIT;
 
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [skip]);
-
+  
   return (
     <section className="max-w-7xl mx-auto px-6 py-8">
       <h1 className="text-2xl font-semibold mb-6 capitalize">{slug}</h1>
@@ -36,7 +33,7 @@ const DesktopProducts = () => {
       <motion.div
         initial={false}
         animate={{ opacity: 1 }}
-        className="grid grid-cols-4 gap-6"
+        className="grid grid-cols-[1fr_1fr_1fr_1fr] gap-6"
       >
         {data.map((product) => (
           <motion.div

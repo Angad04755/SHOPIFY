@@ -8,15 +8,14 @@ import { motion } from "framer-motion";
 import { useParams } from "next/navigation";
 
 
-const LIMIT = 6;
+const LIMIT = 4;
 
 const MobileProducts = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [skip, setSkip] = useState(0);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
-  const params = useParams();
-  const categorySlug = params.slug as string
+  const {slug} = useParams();
   const observerTarget = useRef<HTMLDivElement | null>(null);
 
   const loadMoreProducts = async () => {
@@ -26,14 +25,14 @@ const MobileProducts = () => {
       setLoading(true);
 
       const data = await getProductsByCategory(
-        categorySlug,
+        slug,
         LIMIT,
         skip
       );
 
-      setProducts((prev) => [...prev, ...data.products]);
+      setProducts((prev) => [...prev, ...data]);
 
-      if (skip + LIMIT >= data.total) {
+      if (data.length < LIMIT) {
         setHasMore(false);
       }
 
@@ -65,7 +64,7 @@ const MobileProducts = () => {
   return (
     <section className="px-4 py-6">
       <h1 className="text-xl font-semibold mb-4 capitalize">
-        {categorySlug.replace(/-/g, " ")}
+        {slug}
       </h1>
 
       <div className="grid grid-cols-2 gap-4">
