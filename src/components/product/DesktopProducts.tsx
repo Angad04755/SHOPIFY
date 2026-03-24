@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 import { useParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { Product } from "@/types/typing";
-
+import { ClipLoader } from "react-spinners";
 const LIMIT = 4;
 
 const DesktopProducts = () => {
@@ -34,14 +34,14 @@ const DesktopProducts = () => {
 
   useEffect(() => {
     window.scrollTo({top: 0, behavior: "smooth"})
-  }, [skip]);
-  
+  }, [data]);
+
   return (
     <section className="max-w-7xl mx-auto px-6 py-8">
       <h1 className="text-2xl font-semibold mb-6 capitalize">{slug}</h1>
 
       {isLoading && (
-        <p className="text-center text-gray-500 mb-4">Loading products...</p>
+        <p className="text-center text-gray-500 mb-4"><ClipLoader size={45} color="black"/></p>
       )}
 
       <motion.div
