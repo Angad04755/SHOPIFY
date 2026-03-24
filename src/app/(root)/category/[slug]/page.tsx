@@ -14,17 +14,10 @@ const Page = () => {
 
   return (
     <Suspense>
-      <div className="hidden md:block">
+    
         <Suspense>
         <DesktopProducts/>
         </Suspense>
-      </div>
-
-      <div className="block md:hidden">
-        <Suspense>
-        <MobileProducts/>
-        </Suspense>
-      </div>
     </Suspense>
   );
 };

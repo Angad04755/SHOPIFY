@@ -6,60 +6,44 @@ import { getProductsByCategory } from "../../lib/api/ApiRquests";
 import ProductCard from "./ProductCard";
 import { motion } from "framer-motion";
 import { useParams } from "next/navigation";
-
+import { useQuery } from "@tanstack/react-query";
 
 const LIMIT = 4;
 
 const MobileProducts = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [skip, setSkip] = useState(0);
-  const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const {slug} = useParams();
-  const observerTarget = useRef<HTMLDivElement | null>(null);
+  const observerTarget = useRef(null);
 
-  const loadMoreProducts = async () => {
-    if (loading || !hasMore) return;
+  const { data =[], isLoading } = useQuery({
+    queryKey: ["mobile-products", slug, skip],
+    queryFn: () => getProductsByCategory(slug, LIMIT, skip),
+  });
 
-    try {
-      setLoading(true);
-
-      const data = await getProductsByCategory(
-        slug,
-        LIMIT,
-        skip
-      );
-
-      setProducts((prev) => [...prev, ...data]);
-
-      if (data.length < LIMIT) {
-        setHasMore(false);
-      }
-
-      setSkip((prev) => prev + LIMIT);
-    } catch (error) {
-      console.error("Failed to load products", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Intersection Observer
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          loadMoreProducts();
-        }
+    if (!data) return;
+    setProducts((prev) => [...prev, ...data]);
+    if (data.length < LIMIT) setHasMore(false);
+  }, [data]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting && !isLoading && hasMore) {
+        setSkip((prev) => prev + LIMIT);
       }
-    );
-
-    if (observerTarget.current) {
-      observer.observe(observerTarget.current);
-    }
-
+    });
+    if (observerTarget.current) observer.observe(observerTarget.current);
     return () => observer.disconnect();
-  }, [products, loading]);
+  }, [isLoading, hasMore]);
+
+  // reset when category changes
+  useEffect(() => {
+    setProducts([]);
+    setSkip(0);
+    setHasMore(true);
+  }, [slug]);
 
   return (
     <section className="px-4 py-6">
@@ -81,21 +65,16 @@ const MobileProducts = () => {
       </div>
 
       {hasMore && (
-        <div
-          ref={observerTarget}
-          className="h-12 flex justify-center items-center"
-        >
-          {loading && (
-            <p className="text-gray-500 text-sm">
-              Loading more products...
-            </p>
+        <div ref={observerTarget} className="h-12 flex justify-center items-center">
+          {isLoading && (
+            <p className="text-gray-500 text-sm">Loading more products...</p>
           )}
         </div>
       )}
 
       {!hasMore && (
         <p className="text-center text-gray-400 text-sm mt-6">
-          You’ve reached the end
+          You've reached the end
         </p>
       )}
     </section>

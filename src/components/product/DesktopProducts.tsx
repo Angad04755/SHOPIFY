@@ -12,6 +12,7 @@ const LIMIT = 4;
 
 const DesktopProducts = () => {
   const [skip, setSkip] = useState(0);
+  const [page, setPage] = useState(1);
   const { slug } = useParams();
 
   const { data = [], isLoading } = useQuery<Product[]>({
@@ -19,8 +20,21 @@ const DesktopProducts = () => {
     queryFn: () => getProductsByCategory(slug, LIMIT, skip),
   });
 
+  const handleNext = () => {
+    setPage((val) => val + 1);
+    setSkip((prev) => prev + LIMIT);
+  }
+  const handlePrev = () => {
+    setPage((val) => val - 1);
+    setSkip((prev) => prev - LIMIT);
+  }
+
+
   const isLastPage = data.length < LIMIT;
 
+  useEffect(() => {
+    window.scrollTo({top: 0, behavior: "smooth"})
+  }, [skip]);
   
   return (
     <section className="max-w-7xl mx-auto px-6 py-8">
@@ -33,7 +47,7 @@ const DesktopProducts = () => {
       <motion.div
         initial={false}
         animate={{ opacity: 1 }}
-        className="grid grid-cols-[1fr_1fr_1fr_1fr] gap-6"
+        className="grid grid-cols-[1fr_1fr] md:grid-cols-[1fr_1fr_1fr_1fr] gap-6"
       >
         {data.map((product) => (
           <motion.div
@@ -46,19 +60,22 @@ const DesktopProducts = () => {
           </motion.div>
         ))}
       </motion.div>
+      
 
       <div className="flex justify-center gap-4 mt-8">
         <button
           disabled={skip === 0}
-          onClick={() => setSkip((prev) => prev - LIMIT)}
+          onClick={handlePrev}
           className="px-5 py-2 border rounded-md disabled:opacity-40"
         >
           Previous
         </button>
-
+        <span className="font-bold text-xl">
+          {page}
+          </span>
         <button
           disabled={isLastPage}
-          onClick={() => setSkip((prev) => prev + LIMIT)}
+          onClick={handleNext}
           className="px-5 py-2 border rounded-md disabled:opacity-40"
         >
           Next
