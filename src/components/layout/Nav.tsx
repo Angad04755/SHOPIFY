@@ -263,7 +263,7 @@ const Nav = () => {
 
 
                       {/* Sign Out */}
-                      <div className="py-1 border-t border-gray-100">
+                      <div>
                         <button
                           onClick={() => {
                             dispatch(signOut());
@@ -271,7 +271,7 @@ const Nav = () => {
                             setIsOpen(false)
                             toast.success("Signed out")
                           }}
-                          className="flex items-center gap-3 w-full px-4 py-2.5 text-sm text-red-500 hover:bg-red-50 transition"
+                          className="flex items-center gap-3 w-full px-4 py-2.5 text-sm text-red-500 hover:bg-red-50 transition duration-150"
                         >
                           <LogOut size={15} /> Sign Out
                         </button>
@@ -279,9 +279,9 @@ const Nav = () => {
                     </div>
                     )
                     :(
-                      <div className="absolute mt-[-20px] p-3 flex flex-col gap-2">
+                      <div className="w-full absolute mt-[-20px] p-3 flex flex-col gap-2 shadow-xl rounded-xl border border-gray-100">
                       <p className="text-xs text-gray-500 px-1 pb-1">
-                        Welcome! Please sign in.
+                    
                       </p>
                       <button
                         onClick={() => {
