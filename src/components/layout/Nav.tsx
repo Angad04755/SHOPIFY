@@ -18,9 +18,7 @@ const Nav = () => {
   const [scrolled, setScrolled] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
 
-  // useRef stores a reference to the dropdown div
-  // We use it to check: "did the user click inside or outside?"
-  const profileRef = useRef<HTMLDivElement>(null);
+
 
   const dispatch = useDispatch();
 
@@ -250,6 +248,7 @@ const Nav = () => {
                     onClick={() => {
                       dispatch(signOut());
                       setIsOpen(false);
+                      toast.success("signed out");
                     }}
                     classname="w-full bg-black text-white py-3 active:scale-95 transition duration-150"
                   />
@@ -257,7 +256,7 @@ const Nav = () => {
                   <Button
                     text="Sign In"
                     onClick={() => {
-                      dispatch(signIn());
+                      router.push("/sign-up");
                       setIsOpen(false);
                     }}
                     classname="w-full bg-black text-white py-3 active:scale-95 transition duration-150"

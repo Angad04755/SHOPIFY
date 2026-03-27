@@ -26,6 +26,7 @@ function SignupPage() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-600 via-pink-400 to-blue-500">
       
       {/* REGISTER */}
+      <div>
       {state === "register" && (
         <div className="bg-white w-[350px] p-8 rounded-2xl shadow-xl">
           
@@ -70,7 +71,8 @@ function SignupPage() {
           
         </div>
       )}
-
+      </div>
+      <div>
       {/* SIGN IN */}
       {state === "sign-in" && (
         <div className="bg-white w-[350px] p-8 rounded-2xl shadow-xl">
@@ -107,6 +109,7 @@ function SignupPage() {
 
         </div>
       )}
+      </div>
     </div>
   );
 }
