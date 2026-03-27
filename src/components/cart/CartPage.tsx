@@ -37,7 +37,7 @@ const CartPage = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.35 }}
-      className="bg-gray-50 py-10"
+      className="min-h-screen bg-gray-50 py-10"
     >
       {/* EMPTY STATE */}
       {items.length === 0 && (
@@ -120,7 +120,7 @@ const CartPage = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-white rounded-3xl p-6 shadow-lg h-fit lg:sticky lg:top-24"
+            className="bg-white rounded-3xl p-6 shadow-lg"
           >
             <h2 className="text-lg font-semibold text-gray-800 mb-6">
               Order Summary

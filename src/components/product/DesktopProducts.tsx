@@ -37,7 +37,7 @@ const DesktopProducts = () => {
   }, [data]);
 
   return (
-    <section className="max-w-7xl mx-auto px-6 py-8">
+    <section className="min-h-screen max-w-7xl mx-auto px-6 py-8">
       <h1 className="text-2xl font-semibold mb-6 capitalize">{slug}</h1>
 
       {isLoading && (
