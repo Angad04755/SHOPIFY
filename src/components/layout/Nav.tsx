@@ -16,7 +16,8 @@ import { toast } from "react-toastify";
 const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [profileOpen, setProfileOpen] = useState(false);
+  const [desktopProfileOpen, setDesktopProfileOpen] = useState(false);
+  const [mobileProfileOpen, setmobileProfileOpen] = useState(false);
 
 
 
@@ -113,7 +114,7 @@ const Nav = () => {
 
               {/* Profile Icon — clicking it toggles the dropdown */}
               <button
-                onClick={() => setProfileOpen((prev) => !prev)}
+                onClick={() => setDesktopProfileOpen((prev) => !prev)}
                 className="w-9 h-9 rounded-full bg-indigo-200 hover:bg-indigo-300 flex items-center justify-center transition duration-150"
               >
                 <User size={18} className="text-indigo-800" />
@@ -121,10 +122,10 @@ const Nav = () => {
 
               {/* Dropdown — only renders when profileOpen is true */}
               <div>
-              {profileOpen && (
+              {desktopProfileOpen && (
                 <div className="absolute ml-[-160px] mt-[10px] w-52 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden z-[300]">
                   {isAuthenticated ? (
-                    <>
+                    <div>
                       {/* User Info */}
                       <div className="px-4 py-3 border-b border-gray-100 bg-gray-50">
                         <p className="text-xs text-gray-500">Signed in as</p>
@@ -139,7 +140,7 @@ const Nav = () => {
                         <button
                           onClick={() => {
                             dispatch(signOut());
-                            setProfileOpen(false);
+                            setDesktopProfileOpen(false);
                             toast.success("Signed out")
                           }}
                           className="flex items-center gap-3 w-full px-4 py-2.5 text-sm text-red-500 hover:bg-red-50 transition"
@@ -147,7 +148,7 @@ const Nav = () => {
                           <LogOut size={15} /> Sign Out
                         </button>
                       </div>
-                    </>
+                    </div>
                   ) : (
                     <div className="p-3 flex flex-col gap-2">
                       <p className="text-xs text-gray-500 px-1 pb-1">
@@ -156,7 +157,7 @@ const Nav = () => {
                       <button
                         onClick={() => {
                           router.push("/sign-up");
-                          setProfileOpen(false);
+                          setDesktopProfileOpen(false);
                         }}
                         className="w-full bg-black text-white text-sm py-2 rounded-lg hover:bg-gray-800 active:scale-95 transition duration-150"
                       >
@@ -165,7 +166,7 @@ const Nav = () => {
                       <button
                         onClick={() => {
                           router.push("/sign-up?mode=register");
-                          setProfileOpen(false);
+                          setDesktopProfileOpen(false);
                         }}
                         className="w-full border border-gray-200 text-gray-700 text-sm py-2 rounded-lg hover:bg-gray-50 active:scale-95 transition duration-150"
                       >
@@ -241,29 +242,75 @@ const Nav = () => {
                 </Link>
               </div>
 
-              <div className="p-6 border-t">
-                {isAuthenticated ? (
-                  <Button
-                    text="Sign Out"
-                    onClick={() => {
-                      dispatch(signOut());
-                      setIsOpen(false);
-                      toast.success("signed out");
-                    }}
-                    classname="w-full bg-black text-white py-3 active:scale-95 transition duration-150"
-                  />
-                ) : (
-                  <Button
-                    text="Sign In"
-                    onClick={() => {
-                      router.push("/sign-up");
-                      setIsOpen(false);
-                    }}
-                    classname="w-full bg-black text-white py-3 active:scale-95 transition duration-150"
-                  />
-                )}
-              </div>
+        
+
+            
+                <button className="mb-5 w-9 h-9 rounded-full ml-[10px] bg-indigo-200 hover:bg-indigo-300 transition duration-150 flex justify-center items-center" onClick={() => setmobileProfileOpen((prev) => !prev)}>
+                  <User className="text-indigo-500" size={20}/>
+                </button>
+                <div>
+                  {mobileProfileOpen && (
+                    <div className="absolute mt-[-180px] ml-[10px] w-52 bg-white rounded-xl shadow-xl border border-gray-100 z-[300]">
+                      {isAuthenticated ? (
+                    <div>
+                      {/* User Info */}
+                      <div className="px-4 py-3 border-b border-gray-100 bg-gray-50">
+                        <p className="text-xs text-gray-500">Signed in as</p>
+                        <p className="text-sm font-semibold text-gray-800 truncate">
+                          user@example.com
+                        </p>
+                      </div>
+
+
+                      {/* Sign Out */}
+                      <div className="py-1 border-t border-gray-100">
+                        <button
+                          onClick={() => {
+                            dispatch(signOut());
+                            setmobileProfileOpen(false);
+                            setIsOpen(false)
+                            toast.success("Signed out")
+                          }}
+                          className="flex items-center gap-3 w-full px-4 py-2.5 text-sm text-red-500 hover:bg-red-50 transition"
+                        >
+                          <LogOut size={15} /> Sign Out
+                        </button>
+                      </div>
+                    </div>
+                    )
+                    :(
+                      <div className="absolute mt-[-20px] p-3 flex flex-col gap-2">
+                      <p className="text-xs text-gray-500 px-1 pb-1">
+                        Welcome! Please sign in.
+                      </p>
+                      <button
+                        onClick={() => {
+                          router.push("/sign-up");
+                          setmobileProfileOpen(false);
+                          setIsOpen(false)
+                        }}
+                        className="w-full bg-black text-white text-sm py-2 rounded-lg hover:bg-gray-800 active:scale-95 transition duration-150"
+                      >
+                        Sign In
+                      </button>
+                      <button
+                        onClick={() => {
+                          router.push("/sign-up");
+                          setmobileProfileOpen(false);
+                          setIsOpen(false)
+                        }}
+                        className="w-full border border-gray-200 text-gray-700 text-sm py-2 rounded-lg hover:bg-gray-50 active:scale-95 transition duration-150"
+                      >
+                        Register
+                      </button>
+                    </div>
+                  )}
+                    </div>
+                  )}
+                </div>
+                    
             </motion.aside>
+          
           </motion.div>
         )}
       </AnimatePresence>
