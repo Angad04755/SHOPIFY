@@ -1,13 +1,15 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import cartSlice from "./features/cart/cartSlice";
 import authSlice from "./features/auth/authSlice";
-
+import registerSlice from "./features/auth/registerSlice";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
 const rootReducer = combineReducers({
   auth: authSlice,
   cart: cartSlice,
+  register: registerSlice,
+
 });
 
 const persistConfig = {
@@ -28,5 +30,4 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const persistor = persistStore(store);
 
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
+export default store;

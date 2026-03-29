@@ -4,7 +4,6 @@ import {
   PayPalButtons,
   PayPalScriptProvider,
 } from "@paypal/react-paypal-js";
-import { RootState } from "../../../store/store";
 import { useSelector, UseSelector } from "react-redux";
 interface PaypalButtonProps {
   amount: string;
@@ -14,7 +13,7 @@ interface PaypalButtonProps {
 
 const PaypalButton = ({ amount, onSuccess, onError }: PaypalButtonProps) => {
   const formattedAmount = Number(amount).toFixed(2);
-  const isAuthenticaled = useSelector((state: RootState) => state.auth.isAuthinticated);
+  const isAuthenticaled = useSelector((state: any) => state.auth.isAuthinticated);
   return (
     <PayPalScriptProvider
       options={{

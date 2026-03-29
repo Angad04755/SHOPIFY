@@ -21,7 +21,10 @@ export async function getProductsByCategory(
   const res = await axios.get(
     `https://dummyjson.com/products/category/${category}?limit=${limit}&skip=${skip}`
   );
-  return res.data.products;
+  return {
+    products: res.data.products,
+    total: res.data.total,
+  }
 }
 
 export async function searchProduct(query: string) {

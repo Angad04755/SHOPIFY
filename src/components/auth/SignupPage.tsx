@@ -1,25 +1,30 @@
 "use client";
 
 import { useState } from "react";
-import { AppDispatch } from "../../../store/store";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { signIn } from "../../../store/features/auth/authSlice";
 import { useRouter } from "next/navigation";
+import { Register } from "../../../store/features/auth/registerSlice";
 
 function SignupPage() {
   const [state, setState] = useState<"sign-in" | "register">("register");
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch();
+  const isRegistered = useSelector((state: any) => state.register.isRegistered)
   const router = useRouter();
 
   // ✅ FIXED: prevent reload + redirect works
   const handleSignIn = (e: any) => {
     e.preventDefault();
-    dispatch(signIn());
+    dispatch(signIn(true));
     router.push("/");
   };
+if (isRegistered) {
+  setState("sign-in");
+}
 
   const handleRegister = () => {
     setState("sign-in");
+    dispatch(Register(true));
   };
 
   return (

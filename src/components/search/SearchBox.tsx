@@ -4,7 +4,7 @@ import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import { Product } from "../../types/typing";
 import { SearchIcon } from "lucide-react";
-import { searchProduct } from "../../lib/api/ApiRquests"
+import { searchProduct } from "../../api/ApiRquests"
 
 const SearchBox = () => {
 

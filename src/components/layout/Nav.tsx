@@ -5,7 +5,6 @@ import Image from "next/image";
 import { useEffect, useState, useRef } from "react";
 import { HeartIcon, ShoppingCart, Menu, X, User, LogOut, Settings, Package } from "lucide-react";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../../store/store";
 import { signIn, signOut } from "../../../store/features/auth/authSlice";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
@@ -23,13 +22,13 @@ const Nav = () => {
 
   const dispatch = useDispatch();
 
-  const items = useSelector((state: RootState) => state.cart.items);
+  const items = useSelector((state: any) => state.cart.items);
   const isAuthenticated = useSelector(
-    (state: RootState) => state.auth.isAuthinticated
+    (state: any) => state.auth.isAuthinticated
   );
 
   const totalQuantity = items.reduce(
-    (total, item) => total + item.quantity,
+    (total: number, item: any) => total + item.quantity,
     0
   );
 
@@ -139,7 +138,7 @@ const Nav = () => {
                       <div className="py-1 border-t border-gray-100">
                         <button
                           onClick={() => {
-                            dispatch(signOut());
+                            dispatch(signOut(false));
                             setDesktopProfileOpen(false);
                             toast.success("Signed out")
                           }}
@@ -266,7 +265,7 @@ const Nav = () => {
                       <div>
                         <button
                           onClick={() => {
-                            dispatch(signOut());
+                            dispatch(signOut(false));
                             setmobileProfileOpen(false);
                             setIsOpen(false)
                             toast.success("Signed out")
