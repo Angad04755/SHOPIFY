@@ -5,9 +5,7 @@ const DesktopProducts = dynamic(() =>
   import("@/components/product/DesktopProducts")
 );
 
-const MobileProducts = dynamic(() =>
-  import("@/components/product/MobileProducts")
-);
+
 
 
 const Page = () => {
