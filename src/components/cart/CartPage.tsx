@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState, AppDispatch } from "../../../store/store";
+
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -17,13 +17,13 @@ import { motion } from "framer-motion";
 import { Trash2 } from "lucide-react";
 
 const CartPage = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const items = useSelector((state: RootState) => state.cart.items);
+  const dispatch = useDispatch();
+  const items = useSelector((state: any) => state.cart.items);
   const router = useRouter();
 
   const totalQuantity = 
-  items.reduce((total, item) => total + item.quantity, 0);
-  const subtotal = Number(items.reduce((total, item) => total + item.product.price * item.quantity, 0).toFixed(2));
+  items.reduce((total: number, item: any) => total + item.quantity, 0);
+  const subtotal = Number(items.reduce((total: number, item: any) => total + item.product.price * item.quantity, 0).toFixed(2));
   const vat = Number((subtotal * 0.15).toFixed(2));
   const totalPriceVat = Number((subtotal + vat).toFixed(2));
 
@@ -63,7 +63,7 @@ const CartPage = () => {
               Shopping Cart ({totalQuantity})
             </h1>
 
-            {items.map((item) => (
+            {items.map((item: any) => (
               <motion.div
                 key={item.product.id}
                 initial={{ opacity: 0, scale: 0.98 }}

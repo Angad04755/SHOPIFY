@@ -9,7 +9,7 @@ import { motion } from "framer-motion";
 
 const SearchPage = () => {
   const searchParams = useSearchParams();
-  const query = searchParams.get("query") || "";
+  const query = searchParams.get("query");
 
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);

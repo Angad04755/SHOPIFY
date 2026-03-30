@@ -1,6 +1,5 @@
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
-export const search = "force-dynamic";
 const SearchPage = dynamic(() => import("@/components/search/SearchPage"));
 const Page = () => {
   return (

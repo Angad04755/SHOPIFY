@@ -3,12 +3,11 @@
 import React from "react";
 import { ShoppingBagIcon } from "lucide-react";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../store/store";
 
 function ShoppingCartButton() {
-  const items = useSelector((state: RootState) => state.cart.items);
+  const items = useSelector((state: any) => state.cart.items);
   const totalQuantity = items.reduce(
-    (total, item) => total + item.quantity,
+    (total: number, item: any) => total + item.quantity,
     0
   );
 
