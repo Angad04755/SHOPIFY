@@ -14,6 +14,9 @@ interface PaypalButtonProps {
 const PaypalButton = ({ amount, onSuccess, onError }: PaypalButtonProps) => {
   const formattedAmount = Number(amount).toFixed(2);
   const isAuthenticated = useSelector((state: any) => state.auth.isAuthenticated);
+  const isRegistered = useSelector((state: any) => state.register. isRegistered);
+
+  const Notuser: boolean = !isAuthenticated && !isRegistered 
   return (
     <PayPalScriptProvider
       options={{
@@ -22,7 +25,7 @@ const PaypalButton = ({ amount, onSuccess, onError }: PaypalButtonProps) => {
         intent: "capture",
       }}
     >
-      <PayPalButtons disabled={!isAuthenticated}
+      <PayPalButtons disabled={Notuser}
         fundingSource={FUNDING.PAYPAL}
         createOrder={(data, actions) =>
           actions.order.create({
