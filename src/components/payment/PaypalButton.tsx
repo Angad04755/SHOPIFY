@@ -14,9 +14,8 @@ interface PaypalButtonProps {
 const PaypalButton = ({ amount, onSuccess, onError }: PaypalButtonProps) => {
   const formattedAmount = Number(amount).toFixed(2);
   const isAuthenticated = useSelector((state: any) => state.auth.isAuthenticated);
-  const isRegistered = useSelector((state: any) => state.register. isRegistered);
 
-  const Notuser: boolean = !isAuthenticated && !isRegistered 
+  const Notuser: boolean = !isAuthenticated 
   return (
     <PayPalScriptProvider
       options={{
