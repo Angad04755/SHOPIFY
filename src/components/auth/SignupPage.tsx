@@ -1,46 +1,44 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { signIn } from "../../../store/features/auth/authSlice";
+import { authenticated } from "../../../store/features/auth/authSlice";
 import { useRouter } from "next/navigation";
 import { Register } from "../../../store/features/auth/registerSlice";
 
 function SignupPage() {
-  const [state, setState] = useState<"sign-in" | "register">("register");
+  const isRegistered = useSelector((state: any) => state.register.isRegistered);
+  const [state, setState] = useState<"sign-in" | "register">();
   const dispatch = useDispatch();
-  const isRegistered = useSelector((state: any) => state.register.isRegistered)
   const router = useRouter();
 
-  // ✅ FIXED: prevent reload + redirect works
   const handleSignIn = (e: any) => {
     e.preventDefault();
-    dispatch(signIn(true));
+    dispatch(authenticated(true));
     router.push("/");
   };
-if (isRegistered) {
-  setState("sign-in");
-}
 
-  const handleRegister = () => {
-    setState("sign-in");
+  const handleRegister = (e: any) => {
+    e.preventDefault(); 
     dispatch(Register(true));
+    setState("sign-in");
   };
+
+  useEffect(() => {
+    isRegistered ? setState("sign-in") : setState("register")
+  }, [isRegistered]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-600 via-pink-400 to-blue-500">
-      
+
       {/* REGISTER */}
-      <div>
       {state === "register" && (
         <div className="bg-white w-[350px] p-8 rounded-2xl shadow-xl">
-          
           <h2 className="text-2xl font-bold text-center mb-6">
             Create Account
           </h2>
 
           <form onSubmit={handleRegister} className="flex flex-col gap-4">
-            
             <div className="flex flex-col">
               <label className="text-sm font-medium mb-1">Name</label>
               <input
@@ -68,26 +66,22 @@ if (isRegistered) {
               />
             </div>
 
-            <button type="submit"
+            <button
+              type="submit"
               className="mt-2 py-2 bg-purple-600 text-white rounded-md font-semibold hover:bg-purple-700 transition duration-300"
-            >Register</button>
+            >
+              Register
+            </button>
           </form>
-
-          
         </div>
       )}
-      </div>
-      <div>
+
       {/* SIGN IN */}
       {state === "sign-in" && (
         <div className="bg-white w-[350px] p-8 rounded-2xl shadow-xl">
-          
-          <h2 className="text-2xl font-bold text-center mb-6">
-            Sign In
-          </h2>
+          <h2 className="text-2xl font-bold text-center mb-6">Sign In</h2>
 
           <form onSubmit={handleSignIn} className="flex flex-col gap-4">
-            
             <div className="flex flex-col">
               <label className="text-sm font-medium mb-1">Email</label>
               <input
@@ -107,14 +101,14 @@ if (isRegistered) {
             </div>
 
             <button
-            type="submit"             
+              type="submit"
               className="bg-purple-600 text-white py-3 px-4 rounded-md hover:bg-purple-700 active:scale-95 transition duration-300"
-            >Sign In</button>
+            >
+              Sign In
+            </button>
           </form>
-
         </div>
       )}
-      </div>
     </div>
   );
 }

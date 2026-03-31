@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 import { useParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { Product } from "@/types/typing";
-import { ClipLoader } from "react-spinners";
+import { GridLoader } from "react-spinners";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const LIMIT = 4;
@@ -19,7 +19,7 @@ const DesktopProducts = () => {
 
   const skip = (page - 1) * LIMIT;
 
-  const { data, isLoading } = useQuery({
+  const { data, isFetching } = useQuery({
     queryKey: ["products", slug, skip],
     queryFn: () => getProductsByCategory(slug, LIMIT, skip),
 
@@ -34,12 +34,11 @@ const DesktopProducts = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [data]);
 
-  // 🔥 loading state
-  if (isLoading) {
+  if (isFetching) {
     return (
-      <p className="text-center mt-10">
-        <ClipLoader size={45} color="black" />
-      </p>
+      <div className="min-h-screen flex justify-center items-center mt-10">
+        <GridLoader size={25} color="black" />
+      </div>
     );
   }
 
@@ -101,7 +100,6 @@ const DesktopProducts = () => {
         ))}
       </motion.div>
 
-      {/* 🔥 Pagination */}
       <div className="w-full flex justify-center gap-1 mt-8 items-center">
         {/* Prev */}
         <button

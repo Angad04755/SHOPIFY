@@ -2,48 +2,37 @@
 
 import Image from "next/image";
 import axios from "axios";
-import { useEffect, useState } from "react";
-import { Product } from "../../types/typing";
-import { addItem } from "../../../store/features/cart/cartSlice";
 import { useDispatch } from "react-redux";
 import { motion } from "framer-motion";
-import AddtoCartButton from "../cart/AddtoCartButton";
-interface Props {
-  id: string;
-}
+import { useParams } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
+import { addItem } from "../../../store/features/cart/cartSlice";
+import { Product } from "../../types/typing";
+import Button from "../ui/Button";
+import { fetchProduct } from "@/api/ApiRquests";
+import {toast} from "react-toastify";
 
-export default function ProductDetails({ id }: Props) {
+export default function ProductDetails() {
+  const { id } = useParams();
   const dispatch = useDispatch();
-  const [product, setProduct] = useState<Product | null>(null);
-  const [loading, setLoading] = useState(true);
+
+  const { data, isLoading } = useQuery({
+    queryKey: ["product", id],
+    queryFn: () => fetchProduct(id),
+
+    initialData: {
+     product:"", 
+    }
+  });
+
+  const product: Product = data.product
 
   const handleAddItem = () => {
     if (product) dispatch(addItem(product));
+    toast.success("Added to cart");
   };
 
-  useEffect(() => {
-    if (!id || isNaN(Number(id))) {
-      setLoading(false);
-      return;
-    }
-
-    const fetchProduct = async () => {
-      try {
-        const res = await axios.get<Product>(
-          `https://dummyjson.com/products/${id}`
-        );
-        setProduct(res.data);
-      } catch {
-        setProduct(null);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProduct();
-  }, [id]);
-
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50 text-gray-700">
         Loading product...
@@ -54,7 +43,7 @@ export default function ProductDetails({ id }: Props) {
   if (!product) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50 text-gray-700">
-        Product not found
+        Product not found.
       </div>
     );
   }
@@ -104,9 +93,7 @@ export default function ProductDetails({ id }: Props) {
             <div className="flex items-center mt-4">
               <span className="text-yellow-500 text-lg">★</span>
               <span className="ml-2 text-sm text-gray-600">
-                {product.rating
-                  ? `${product.rating} / 5 rating`
-                  : "No ratings yet"}
+                {product.rating ? `${product.rating} / 5 rating` : "No ratings yet"}
               </span>
             </div>
 
@@ -114,21 +101,8 @@ export default function ProductDetails({ id }: Props) {
             <p className="text-2xl sm:text-3xl font-semibold text-gray-900 mt-6">
               ${product.price}
             </p>
-          </div>
-
-          {/* Add to Cart */}
-          {/* <motion.button
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
-            onClick={handleAddItem}
-            className="mt-8 w-full bg-indigo-600 hover:bg-indigo-700
-                       text-white font-semibold py-3 sm:py-4
-                       rounded-xl transition-all shadow-md"
-          >
-            🛒 Add to Cart
-          </motion.button> */}
-         <AddtoCartButton product={product}/>
-    
+          </div>    
+          <Button text="Add to Cart" onClick={handleAddItem} classname="px-3 py-2 rounded-xl bg-blue-600 text-white hover:bg-blue-800 transition-all duration-150 cursor-pointer active:scale-95"/>
         </div>
       </motion.div>
     </motion.div>

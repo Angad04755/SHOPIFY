@@ -33,3 +33,12 @@ export async function searchProduct(query: string) {
   );
   return res.data.products;
 }
+
+export async function fetchProduct(id: ParamValue) {
+  const res = await axios.get(
+    `https://dummyjson.com/products/${id}`);
+  return {
+    product: res.data,
+  }
+
+};

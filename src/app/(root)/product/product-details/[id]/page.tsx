@@ -3,17 +3,12 @@ import { ClipLoader } from "react-spinners";
 import { Suspense } from "react";
 
 const ProductDetails = dynamic(() => import("@/components/product/productDetails")) 
-interface Props {
-  params: Promise<{
-    id: string;
-  }>;
-}
 
-export default async function Page({ params }: Props) {
-  const { id } = await params;
+
+export default async function Page() {
   return ( 
   <Suspense fallback={<div className="flex justify-center items-center"><ClipLoader size={55} color="black"/></div>}>
-  <ProductDetails id={id}/>
+  <ProductDetails/>
   </Suspense>
   )
 }
