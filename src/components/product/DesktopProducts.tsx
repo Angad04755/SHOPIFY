@@ -45,7 +45,6 @@ const DesktopProducts = () => {
   const TOTAL_PAGES = Math.ceil(total / productsPerPage);
   const isLastPage = page === TOTAL_PAGES;
 
-  const DOTS = null;
 
   // pagination logic
   const pages = [];
@@ -58,7 +57,7 @@ const DesktopProducts = () => {
     ) {
       pages.push(i);
     } else {
-      pages.push(DOTS);
+      pages.push(null);
     }
   }
 
@@ -99,7 +98,7 @@ const DesktopProducts = () => {
         {/* Page Numbers */}
         <div className="flex gap-2">
           {pages.map((p, index) => {
-            if ( p === DOTS) {
+            if ( p === null) {
               return (
                 <span key={index} className="px-2 text-gray-500 mt-[10px]">
                   {"..."}
