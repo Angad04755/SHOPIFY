@@ -7,7 +7,6 @@ const DesktopProducts = dynamic(() =>
 
 
 
-
 const Page = () => {
 
   return (
