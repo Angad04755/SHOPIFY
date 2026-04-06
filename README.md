@@ -17,4 +17,3 @@ A modern, responsive e-commerce web application built with a focus on performanc
 # Live Demo
 
 https://shopify-next-web-app.vercel.app/
-
