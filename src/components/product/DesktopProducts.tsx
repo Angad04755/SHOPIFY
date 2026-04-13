@@ -6,7 +6,7 @@ import ProductCard from "./ProductCard";
 import { motion, number } from "framer-motion";
 import { useParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
-import { Product } from "@/types/typing";
+import { Product } from "../product/types";
 import { GridLoader } from "react-spinners";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 

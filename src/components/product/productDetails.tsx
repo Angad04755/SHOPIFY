@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 import { useParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { addItem } from "../../../store/features/cart/cartSlice";
-import { Product } from "../../types/typing";
+import { Product } from "../product/types";
 import Button from "../ui/Button";
 import { fetchProduct } from "@/api/ApiRquests";
 import {toast} from "react-toastify";
