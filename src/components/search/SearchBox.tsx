@@ -2,7 +2,7 @@
 
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
-import { Product } from "../../types/typing";
+import { Product } from "../product/types";
 import { SearchIcon } from "lucide-react";
 import { searchProduct } from "../../api/ApiRquests"
 
