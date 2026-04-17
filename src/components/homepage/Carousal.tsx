@@ -4,11 +4,9 @@ import { useEffect, useState } from "react";
 import Image, { StaticImageData } from "next/image";
 import { motion } from "framer-motion";
 
-interface ImageProps {
-  images: StaticImageData[];
-}
 
-const Carousel = ({ images }: ImageProps) => {
+
+const Carousel = ({ images }: any) => {
   const slides = [...images, images[0]]; // clone first at end
 
   const [index, setIndex] = useState(0);

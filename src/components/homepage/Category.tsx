@@ -43,7 +43,7 @@ const Category = () => {
   }
 
   return (
-    <section className="relative pt-5 pb-24 bg-gradient-to-b from-azure via-red-400 to-orange-200" style={{animation: "category 0.6s ease-in-out"}}>
+    <section className="min-h-screen relative pt-5 pb-24 bg-gradient-to-b from-azure via-red-400 to-orange-200" style={{animation: "category 0.6s ease-in-out"}}>
       <div className="container w-11/12 md:w-4/5 mx-auto">
 
         {/* Heading */}

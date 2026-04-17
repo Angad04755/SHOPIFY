@@ -15,17 +15,19 @@ import PaypalButton from "../payment/PaypalButton";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { Trash2 } from "lucide-react";
+import { useMemo } from "react";
 
 const CartPage = () => {
   const dispatch = useDispatch();
   const items = useSelector((state: any) => state.cart.items);
   const router = useRouter();
 
-  const totalQuantity = 
-  items.reduce((total: number, item: any) => total + item.quantity, 0);
-  const subtotal = Number(items.reduce((total: number, item: any) => total + item.product.price * item.quantity, 0).toFixed(2));
-  const vat = Number((subtotal * 0.15).toFixed(2));
-  const totalPriceVat = Number((subtotal + vat).toFixed(2));
+  const totalQuantity = useMemo(() => 
+  items.reduce((total: number, item: any) => total + item.quantity, 0), [items]);
+  const subtotal = useMemo(() =>  Number(items.reduce((total: number, item: any) => total + item.product.price * item.quantity, 0).toFixed(2)), [items]);
+
+  const vat = useMemo(() => Number((subtotal * 0.15).toFixed(2)), [subtotal]);
+  const totalPriceVat = useMemo(() => Number((subtotal + vat).toFixed(2)), [subtotal]);
 
   const handleSuccess = () => {
     dispatch(clearCart());
