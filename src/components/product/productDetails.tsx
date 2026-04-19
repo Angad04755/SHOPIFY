@@ -10,7 +10,8 @@ import { addItem } from "../../../store/features/cart/cartSlice";
 import { Product } from "../product/types";
 import Button from "../ui/Button";
 import { fetchProduct } from "@/api/ApiRquests";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
+import { useCallback } from "react";
 
 export default function ProductDetails() {
   const { id } = useParams();
@@ -21,17 +22,18 @@ export default function ProductDetails() {
     queryFn: () => fetchProduct(id),
 
     initialData: {
-     product:"", 
+      product: "",
     }
   });
 
   const product: Product = data.product
 
-  const handleAddItem = () => {
-    if (product) dispatch(addItem(product));
-    toast.success("Added to cart");
-  };
-
+  const handleAddItem = useCallback(() => {
+    if (product) {
+      dispatch(addItem(product));
+      toast.success("Added to cart");
+    }
+  }, [product])
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50 text-gray-700">
@@ -101,8 +103,8 @@ export default function ProductDetails() {
             <p className="text-2xl sm:text-3xl font-semibold text-gray-900 mt-6">
               ${product.price}
             </p>
-          </div>    
-          <Button text="Add to Cart" onClick={handleAddItem} classname="px-3 py-2 rounded-xl bg-blue-600 text-white hover:bg-blue-800 transition-all duration-150 cursor-pointer active:scale-95"/>
+          </div>
+          <Button text="Add to Cart" onClick={handleAddItem} classname="px-3 py-2 rounded-xl bg-blue-600 text-white hover:bg-blue-800 transition-all duration-150 cursor-pointer active:scale-95" />
         </div>
       </motion.div>
     </motion.div>

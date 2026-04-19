@@ -11,3 +11,7 @@ export type Product = {
   thumbnail: string;
   images: string[];
 }
+
+export type ProductProps = {
+  product: Product;
+}

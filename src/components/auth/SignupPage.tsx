@@ -60,7 +60,7 @@ function SignupPage() {
               {...register("name")}
               type="text"
               placeholder="Enter your name"
-              className="px-3 py-2 border rounded-md outline-none focus:ring-2 focus:ring-purple-500"
+              className="px-3 py-2 border rounded-md outline-none focus-within:ring-2 focus-within:ring-purple-500"
             />
 
             {errors.name && (
@@ -78,7 +78,7 @@ function SignupPage() {
               {...register("email")}
               type="email"
               placeholder="Enter your email"
-              className="px-3 py-2 border rounded-md outline-none focus:ring-2 focus:ring-purple-500"
+              className="px-3 py-2 border rounded-md outline-none focus-within:ring-2 focus-within:ring-purple-500"
             />
 
             {errors.email && (
@@ -96,7 +96,7 @@ function SignupPage() {
               {...register("password")}
               type="password"
               placeholder="Enter your password"
-              className="px-3 py-2 border rounded-md outline-none focus:ring-2 focus:ring-purple-500"
+              className="px-3 py-2 border rounded-md outline-none focus-within:ring-2 focus-within:ring-purple-500"
             />
 
             {errors.password && (

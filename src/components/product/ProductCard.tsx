@@ -7,12 +7,9 @@ import Link from "next/link";
 import { Heart, ShoppingBagIcon } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "../../../store/features/cart/cartSlice";
+import { ProductProps } from "../product/types";
 
-type Props = {
-  product: Product;
-};
-
-const ProductCard = ({ product }: Props) => {
+const ProductCard = ({ product }: ProductProps) => {
   const rate = product.rating ?? 0;
   const num = Math.round(rate);
   const ratingArray = new Array(num).fill(0);
