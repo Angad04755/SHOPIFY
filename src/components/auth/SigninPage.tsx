@@ -3,22 +3,20 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { authenticated } from "../../../store/features/auth/authSlice";
 import { useRouter } from "next/navigation";
-import { loginSchema, LoginType, registerSchema, RegisterType } from "./schema"
+import { loginSchema, LoginType } from "./schema"
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { error } from "console";
 
 function SigninPage() {
 
     const dispatch = useDispatch();
     const router = useRouter();
 
-    const {register, handleSubmit, formState: {errors}} = useForm<RegisterType>({
-      resolver: zodResolver(registerSchema),
+    const {register, handleSubmit, formState: {errors}} = useForm<LoginType>({
+      resolver: zodResolver(loginSchema),
     })
 
-    const handleSignIn = (e: any) => {
-        e.preventDefault();
+    const handleSignIn = () => {
         dispatch(authenticated(true));
         router.push("/");
       };

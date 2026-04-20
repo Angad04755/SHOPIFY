@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { HeartIcon, ShoppingCart, Menu, X, User, LogOut, TrashIcon, ChevronRight, ChevronDown } from "lucide-react";
 import { useSelector, useDispatch } from "react-redux";
 import { authenticated } from "../../../store/features/auth/authSlice";
@@ -11,11 +11,13 @@ import { useRouter } from "next/navigation";
 import SearchBox from "../search/SearchBox";
 import { toast } from "react-toastify";
 import { Register } from "../../../store/features/auth/registerSlice";
+import { usePathname } from "next/navigation";
 
 const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [ProfileOpen, setProfileOpen] = useState(false);
+  const pathname = usePathname();
 
   const dispatch = useDispatch();
 
@@ -26,10 +28,10 @@ const Nav = () => {
 
   const isRegistered = useSelector((state: any) => state.register.isRegistered);
 
-  const totalQuantity = items.reduce(
-    (total: number, item: any) => total + item.quantity,
-    0
-  );
+  const totalQuantity = useMemo(
+  () => items.reduce((sum: number, item: any) => sum + item.quantity, 0),
+  [items]
+);
 
   const router = useRouter();
 
@@ -84,10 +86,10 @@ const Nav = () => {
 
           <div className="hidden lg:flex items-center gap-6">
 
-            <HeartIcon className="cursor-pointer hover:text-red-500 transition" />
+            <HeartIcon className="cursor-pointer hover:text-red-500 transition-all duration-150" />
 
             <Link href="/cart" className="relative">
-              <ShoppingCart />
+              <ShoppingCart className={`${pathname === "/cart" ? "fill-black" : "hover:scale-95 transition-all duration-150"}`}/>
               {totalQuantity > 0 && (
                 <span className="absolute -top-2 -right-2 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
                   {totalQuantity}
@@ -103,7 +105,7 @@ const Nav = () => {
                 <User size={18} className="text-indigo-800" />
               </button>
 
-              <div>
+              <div className="relative">
                 {ProfileOpen && (
                   <div className="absolute ml-[-160px] mt-[10px] w-52 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden z-[300]">
 
