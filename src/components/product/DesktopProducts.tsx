@@ -97,7 +97,7 @@ const DesktopProducts = () => {
 
         {/* Page Numbers */}
         <div className="flex gap-2">
-          {pages.map((p, index) => {
+          {pages.map((p: number | null, index: number) => {
             if ( p === null) {
               return (
                 <span key={index} className="px-2 text-gray-500 mt-[10px]">

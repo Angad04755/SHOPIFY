@@ -12,6 +12,8 @@ import SearchBox from "../search/SearchBox";
 import { toast } from "react-toastify";
 import { Register } from "../../../store/features/auth/registerSlice";
 import { usePathname } from "next/navigation";
+import { CartItem } from "../../../store/types";
+import { Appdispatch, RootState } from "../../../store/store";
 
 const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,17 +21,17 @@ const Nav = () => {
   const [ProfileOpen, setProfileOpen] = useState(false);
   const pathname = usePathname();
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<Appdispatch>();
 
-  const items = useSelector((state: any) => state.cart.items);
+  const items = useSelector((state: RootState) => state.cart.items);
   const isAuthenticated = useSelector(
-    (state: any) => state.auth.isAuthenticated
+    (state: RootState) => state.auth.isAuthenticated
   );
 
   const isRegistered = useSelector((state: any) => state.register.isRegistered);
 
   const totalQuantity = useMemo(
-  () => items.reduce((sum: number, item: any) => sum + item.quantity, 0),
+  () => items.reduce((sum: number, item: CartItem) => sum + item.quantity, 0),
   [items]
 );
 
@@ -71,14 +73,14 @@ const Nav = () => {
           </div>
 
           <div className="hidden md:flex lg:hidden items-center gap-4 flex-1 justify-end">
-            <Link href="/cart">
+            <div onClick={() => router.push("/cart")}>
               <ShoppingCart />
               {totalQuantity > 0 && (
                 <span className="absolute mt-[-35px] ml-[15px] w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
                   {totalQuantity}
                 </span>
               )}
-            </Link>
+            </div>
             <button onClick={() => setIsOpen(true)}>
               <Menu size={26} />
             </button>
