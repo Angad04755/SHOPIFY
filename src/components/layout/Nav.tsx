@@ -43,6 +43,13 @@ const Nav = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const show = () => {
+    setProfileOpen(true);
+  }
+  const hide = () => {
+    setProfileOpen(false);
+  }
+
   return (
     <>
       <motion.header
@@ -98,18 +105,16 @@ const Nav = () => {
                 </span>
               )}
             </Link>
-
-            <div>
+              <div onMouseEnter={show} onMouseLeave={hide}>
               <button
-                onClick={() => setProfileOpen((prev) => !prev)}
-                className="w-9 h-9 rounded-full bg-indigo-200 hover:bg-indigo-300 flex items-center justify-center transition duration-150"
-              >
+                className="relative w-9 h-9 rounded-full bg-indigo-200 hover:bg-indigo-300 flex items-center justify-center transition duration-150"
+              > 
                 <User size={18} className="text-indigo-800" />
               </button>
 
-              <div className="relative">
+              <div className="absolute right-5">
                 {ProfileOpen && (
-                  <div className="absolute ml-[-160px] mt-[10px] w-52 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden z-[300]">
+                  <div className="w-52 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden z-[300]">
 
                     <div>
                       {isAuthenticated && isRegistered && (
@@ -149,9 +154,6 @@ const Nav = () => {
                     <div>
                       {!isAuthenticated && isRegistered && (
                         <div className="flex flex-col">
-                          {/* <p className="text-xs text-gray-500 px-1 pb-1">
-                            Welcome! Please create account.
-                          </p> */}
 
                           <button
                             onClick={() => {
@@ -204,9 +206,8 @@ const Nav = () => {
                   </div>
                 )}
               </div>
+              </div>
             </div>
-
-          </div>
 
           <button onClick={() => setIsOpen(true)} className="md:hidden">
             <Menu size={28} />
@@ -221,22 +222,16 @@ const Nav = () => {
 
       <AnimatePresence>
         {isOpen && (
-          <motion.div
+          <aside
             className="fixed inset-0 z-[9999]"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+          
           >
             <div
               className="absolute inset-0 bg-black/40"
               onClick={() => setIsOpen(false)}
             />
 
-            <motion.aside
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "spring", stiffness: 260, damping: 30 }}
+            <div
               className="absolute right-0 top-0 h-full w-[85%] max-w-[320px] bg-white shadow-xl flex flex-col"
             >
               <div className="p-6 flex flex-col gap-6 flex-grow">
@@ -277,7 +272,7 @@ const Nav = () => {
                 <ChevronRight size={35} color="black"/>
                 <div>
                 {ProfileOpen && (
-                  <div className="absolute mt-[-90px] w-fit bg-white rounded-xl shadow-xl border border-gray-100 z-[300]">
+                  <div onClick={(e) => e.stopPropagation()} className="absolute mt-[-90px] w-fit bg-white rounded-xl shadow-xl border border-gray-100 z-[300]">
 
                     <div>
                       {isAuthenticated && isRegistered && (
@@ -373,8 +368,8 @@ const Nav = () => {
                 </div>
               </div>
 
-            </motion.aside>
-          </motion.div>
+            </div>
+          </aside>
         )}
       </AnimatePresence>
     </>

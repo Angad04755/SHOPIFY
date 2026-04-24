@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { searchProduct } from "../../api/ApiRquests";
 import { Product } from "../product/types";
-import ProductCard from "../product/ProductCard";
+import ProductCard from "../ui/ProductCard";
 import { motion } from "framer-motion";
 
 const SearchPage = () => {

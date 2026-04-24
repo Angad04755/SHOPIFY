@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { getProductsByCategory } from "../../api/ApiRquests";
-import ProductCard from "./ProductCard";
+import ProductCard from "../ui/ProductCard";
 import { motion, number } from "framer-motion";
 import { useParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";

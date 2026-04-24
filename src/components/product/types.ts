@@ -12,6 +12,3 @@ export type Product = {
   images: string[];
 }
 
-export type ProductProps = {
-  product: Product;
-}

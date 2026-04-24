@@ -48,7 +48,7 @@ const SearchBox = () => {
 
 
     // cleanup function
-    return () => { clearTimeout(timer) };
+    return () => clearTimeout(timer);
 
   }, [query]);
 
