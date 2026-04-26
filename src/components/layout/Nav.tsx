@@ -271,7 +271,7 @@ const Nav = () => {
       <div>
       {modalOpen && (
         <div
-          className="fixed inset-0 bg-black/50 z-[9998] flex items-center justify-center"
+          className="fixed inset-0 bg-black/50 z-[1000] flex items-center justify-center"
         >
           
             <Modal onClose={hideModal}>
@@ -309,74 +309,6 @@ const Nav = () => {
                     </span>
                   )}
                 </Link>
-              </div>
-
-              <div className="flex flex-row">
-                <button
-                  className="mb-5 w-9 h-9 rounded-full ml-[10px] bg-indigo-200 hover:bg-indigo-300 transition duration-150 flex justify-center items-center"
-                  onClick={() => setProfileOpen((prev) => !prev)}
-                >
-                  <User className="text-indigo-500" size={20} />
-                </button>
-                <ChevronRight size={35} color="black" />
-                <div>
-                  {ProfileOpen && (
-                    <div onClick={(e) => e.stopPropagation()} className="absolute mt-[-90px] w-fit bg-white rounded-xl shadow-xl border border-gray-100 z-[300]">
-                      {isAuthenticated && isRegistered && (
-                        <div>
-                          <div className="px-4 py-3 border-b border-gray-100 bg-gray-50">
-                            <p className="text-xs text-gray-500 font-bold">Signed in</p>
-                          </div>
-                          <div className="py-1 border-t border-gray-100">
-                            <button
-                              onClick={() => { dispatch(authenticated(false)); setProfileOpen(false); toast.success("Signed out"); setIsOpen(false); }}
-                              className="font-semibold border-b border-gray-200 flex items-center gap-3 w-full px-4 py-2.5 text-sm text-red-500 hover:bg-red-50 transition cursor-pointer active:scale-95"
-                            >
-                              <LogOut size={15} /> Sign Out
-                            </button>
-                            <button
-                              onClick={() => { dispatch(authenticated(false)); dispatch(Register(false)); setProfileOpen(false); toast.success("Account Deleted"); setIsOpen(false); }}
-                              className="font-semibold border-t border-gray-200 flex items-center gap-3 w-full px-4 py-2.5 text-sm text-red-500 hover:bg-red-50 transition cursor-pointer active:scale-95"
-                            >
-                              <TrashIcon size={15} /> Delete Account
-                            </button>
-                          </div>
-                        </div>
-                      )}
-
-                      {!isAuthenticated && isRegistered && (
-                        <div className="flex flex-col">
-                          <button
-                            onClick={() => { router.push("/sign-up"); setProfileOpen(false); setIsOpen(false); }}
-                            className="w-full font-semibold border-b border-gray-200 text-gray-700 text-sm py-2 hover:bg-gray-50 transition duration-150 cursor-pointer"
-                          >
-                            Sign in
-                          </button>
-                          <button
-                            onClick={() => { dispatch(authenticated(false)); dispatch(Register(false)); setProfileOpen(false); toast.success("Account Deleted"); setIsOpen(false); }}
-                            className="border-t font-semibold border-gray-200 flex items-center gap-3 w-full px-4 py-2.5 text-sm text-red-500 hover:bg-red-50 transition cursor-pointer active:scale-95"
-                          >
-                            <TrashIcon size={15} /> Delete Account
-                          </button>
-                        </div>
-                      )}
-
-                      {!isAuthenticated && !isRegistered && (
-                        <div className="flex flex-col gap-2 p-3">
-                          <p className="text-xs text-center text-gray-500 font-bold px-4">
-                            Welcome! Please create account.
-                          </p>
-                          <button
-                            onClick={() => { router.push("/sign-up"); setProfileOpen(false); setIsOpen(false); }}
-                            className="w-full border-t-2 font-semibold border-gray-200 text-gray-700 text-sm py-2 hover:bg-gray-200 transition duration-150 cursor-pointer"
-                          >
-                            Register
-                          </button>
-                        </div>
-                      )}
-                    </div>
-                  )}
-                </div>
               </div>
             </div>
           </aside>
