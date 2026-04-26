@@ -124,7 +124,7 @@ const SearchBox = () => {
 
     <div className="w-full flex justify-center">
 
-      <div className="w-full">
+      <div className="w-full relative">
 
         <form
           onSubmit={handleSubmit}
@@ -138,15 +138,16 @@ const SearchBox = () => {
             value={query}
             onChange={(e) => handleChange(e.target.value)}
             placeholder="Search products..."
-            className="flex-1 px-4 py-2 outline-none"
+            className="flex-1 px-4 py-2 outline-none relative"
           />
 
         </form>
-
+ 
+        <div className="absolute w-fit top-12 z-50 rounded-xl bg-white shadow border">
 
         {suggestions.length > 0 && (
 
-          <div className="absolute w-[345px] md:w-[420px] mt-2 z-50 rounded-xl bg-white shadow border">
+          <div>
 
             {suggestions.map((i) => {
               return (
@@ -161,10 +162,12 @@ const SearchBox = () => {
                 </div>
               )
             })}
+      
 
           </div>
 
         )}
+        </div>
 
       </div>
 
