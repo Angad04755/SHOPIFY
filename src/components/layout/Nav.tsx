@@ -5,15 +5,15 @@ import Image from "next/image";
 import { useEffect, useState, useMemo } from "react";
 import { HeartIcon, ShoppingCart, Menu, X, User, LogOut, TrashIcon, ChevronRight } from "lucide-react";
 import { useSelector, useDispatch } from "react-redux";
-import { authenticated } from "../../../store/features/auth/authSlice";
+import { authenticated } from "../../store/features/auth/authSlice";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 import SearchBox from "../search/SearchBox";
 import { toast } from "react-toastify";
-import { Register } from "../../../store/features/auth/registerSlice";
+import { Register } from "../../store/features/auth/registerSlice";
 import { usePathname } from "next/navigation";
-import { CartItem } from "../../../store/types";
-import { Appdispatch, RootState } from "../../../store/store";
+import { CartItem } from "../../store/types";
+import { Appdispatch, RootState } from "../../store/store";
 import Modal from "../ui/Modal";
 
 const Nav = () => {

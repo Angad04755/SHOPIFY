@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { authenticated } from "../../../store/features/auth/authSlice";
+import { authenticated } from "../../store/features/auth/authSlice";
 import { useRouter } from "next/navigation";
 import { loginSchema, LoginType } from "./schema"
 import { useForm } from "react-hook-form";

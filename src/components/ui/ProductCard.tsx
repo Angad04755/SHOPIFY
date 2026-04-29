@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Heart, ShoppingBagIcon } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
-import { addItem } from "../../../store/features/cart/cartSlice";
+import { addItem } from "../../store/features/cart/cartSlice";
 
 interface ProductProps {
   product: Product;

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Product } from "../../../src/components/product/types";
+import { Product } from "../../../components/product/types";
 import { CartItem } from "../../types";
 
 interface CartState {
