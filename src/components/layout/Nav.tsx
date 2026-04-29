@@ -27,7 +27,7 @@ const Nav = () => {
 
   const items = useSelector((state: RootState) => state.cart.items);
   const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
-  const isRegistered = useSelector((state: any) => state.register.isRegistered);
+  const isRegistered = useSelector((state: RootState) => state.register.isRegistered);
 
   const totalQuantity = useMemo(
     () => items.reduce((sum: number, item: CartItem) => sum + item.quantity, 0),
