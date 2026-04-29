@@ -1,11 +1,13 @@
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
+
 const CartPage = dynamic(() => import("@/components/cart/CartPage"));
-const Page = () => {
+
+export default function Page() {
   return (
-    <Suspense>
-    <CartPage/>
+    <Suspense fallback={<div>Loading cart...</div>}>
+      <CartPage />
     </Suspense>
-  )
+  );
 }
-export default Page;
+

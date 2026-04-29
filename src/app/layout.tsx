@@ -37,7 +37,9 @@ export default function RootLayout({
         <ToastContainer/>
         <StoreProvider>
           <QueryProivder>     
+            <Suspense>
         <Nav/>
+        </Suspense>
         
         {children}
         <Footer/>

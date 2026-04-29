@@ -15,6 +15,7 @@ import { usePathname } from "next/navigation";
 import { CartItem } from "../../store/types";
 import { AppDispatch, RootState } from "../../store/store";
 import Modal from "../ui/Modal";
+import { Suspense } from "react";
 
 const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -160,7 +161,7 @@ const Nav = () => {
           </Link>
 
           <div className="hidden md:block w-full md:w-[420px] ml-[50px]">
-            <SearchBox />
+            <SearchBox/>
           </div>
 
           <div className="hidden md:flex lg:hidden items-center gap-4 flex-1 justify-end">
