@@ -1,6 +1,6 @@
 "use client";
 import { Provider } from "react-redux";
-import {store} from "../store/store";
+import { store } from "../store/store";
 
 function StoreProvider (props: any) {
     return (
