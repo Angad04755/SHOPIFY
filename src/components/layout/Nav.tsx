@@ -13,7 +13,7 @@ import { toast } from "react-toastify";
 import { Register } from "../../store/features/auth/registerSlice";
 import { usePathname } from "next/navigation";
 import { CartItem } from "../../store/types";
-import { Appdispatch, RootState } from "../../store/store";
+import { AppDispatch, RootState } from "../../store/store";
 import Modal from "../ui/Modal";
 
 const Nav = () => {
@@ -23,7 +23,7 @@ const Nav = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const pathname = usePathname();
 
-  const dispatch = useDispatch<Appdispatch>();
+  const dispatch = useDispatch<AppDispatch>();
 
   const items = useSelector((state: RootState) => state.cart.items);
   const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
